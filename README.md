@@ -1,2 +1,2 @@
-# Arcane404 Blog
+# Arcane 404 Blog
 
