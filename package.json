@@ -22,7 +22,7 @@
     "dev:s": "nodemon index.js",
     "dev:db": "node temp/index.js",
     "dev:c": "cd client && npm start",
-    "dev": "concurrently --kill-others-on-fail -n 'server,client' -c 'yellow,white' npm:\"dev:s\" npm:\"dev:c\"",
+    "dev": "concurrently -k -n 'server,client' -c 'yellow,white' npm:\"dev:s\" npm:\"dev:c\"",
     "build": "npm install && cd client && npm install && npm run build",
     "build:dev": "cd client && npm run build",
     "prod:dev": "cd client && serve build",
@@ -66,5 +66,13 @@
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "serve": "^12.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arcane-404/arcane-404-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arcane-404/arcane-404-blog/issues"
+  },
+  "homepage": "https://github.com/Arcane-404/arcane-404-blog#readme"
 }
