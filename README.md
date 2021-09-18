@@ -46,7 +46,9 @@ MONGO_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[po
 # e.g. mongodb+srv://the-arcane-404:the-password-404@foo123-shard-00-03-a1b2c.mongodb.net:27017/blog_app_db
 ```
 
-6. start `npm run dev`
+6. if Mac, `chmod +x .husky/pre-commit`
+   - if Windows, skip
+7. start `npm run dev`
 
 ## Tools & Technologies
 
