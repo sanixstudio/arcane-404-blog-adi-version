@@ -20,12 +20,7 @@
     "plugin:security/recommended"
     // "prettier"
   ],
-  "plugins": [
-    "react",
-    "react-hooks",
-    "import",
-    "security"
-  ],
+  "plugins": ["react", "react-hooks", "import", "security"],
   "overrides": [
     {
       "files": ["**/*.stories.*"],
