@@ -1,25 +1,17 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import apiRoutes from './routes/apiRoutes.js'
-const app = express()
+import dotenv from 'dotenv'
+
+import app from './app.js'
+import db from './config/connection.js'
+
+
+// use dotenv
+dotenv.config()
+
 const PORT = process.env.PORT || 8000
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost/blogs'
 
-// Mongo DB/mongoose connection
-const connection = () => {
-	mongoose.connect(MONGO_URI, () => {
-		console.log('connected to db!')
+// connect db and start server
+db.once('open', () => {
+	app.listen(PORT, () => {
+		console.log(`connected to http://localhost:${PORT}`)
 	})
-}
-connection()
-
-// middleware
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-// apiRoute
-app.use('/api', apiRoutes)
-
-app.listen(PORT, () => {
-	console.log(`connected to http://localhost:${PORT}`)
 })
