@@ -1,10 +1,10 @@
 import React from 'react'
-import { HeaderBox, HWrapper } from './_Header.styles'
+import { HeaderBox, HeaderWrapper } from './_Header.styles'
 
 export default function Header ({ children, ...props }) {
 	return <HeaderBox { ...props } as="header">{ children }</HeaderBox>
 }
 
-Header.Wrapper = function HeaderWrapper ({ children, ...props }) {
-	return <HWrapper { ...props }>{ children }</HWrapper>
+Header.Wrapper = function HWrapper ({ children, ...props }) {
+	return <HeaderWrapper { ...props }>{ children }</HeaderWrapper>
 }
