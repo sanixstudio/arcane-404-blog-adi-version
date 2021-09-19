@@ -1,9 +1,10 @@
 import React from 'react'
+import { Header } from './containers'
 
 const App = () => {
 	return (
 		<>
-			<h1>Arcane 404 Blog App</h1>
+			<Header />
 		</>
 	)
 }
