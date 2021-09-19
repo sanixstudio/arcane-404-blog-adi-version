@@ -1,10 +1,10 @@
 import React from 'react'
-import { Header } from './containers'
+import { Headers } from './containers'
 
 const App = () => {
 	return (
 		<>
-			<Header />
+			<Headers />
 		</>
 	)
 }

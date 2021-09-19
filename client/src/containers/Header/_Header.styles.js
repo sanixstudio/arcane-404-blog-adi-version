@@ -12,4 +12,4 @@ export const HeaderBox = chakra(Box, {
 	}
 })
 
-export const HWrapper = chakra(Wrapper, {})
+export const HeaderWrapper = chakra(Wrapper, {})
