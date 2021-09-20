@@ -1,3 +1,3 @@
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { CloseIcon, HamburgerIcon as OpenIcon } from '@chakra-ui/icons'
 
-export { CloseIcon, HamburgerIcon }
+export { CloseIcon, OpenIcon }

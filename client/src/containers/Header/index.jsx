@@ -1,16 +1,8 @@
 import React from 'react'
-import { useDisclosure } from '@chakra-ui/react'
 import Header from './_Header'
-import {
-	Logo,
-	NavBar,
-	MenuToggle
-} from '../../connections'
+import { Logo,	NavBar } from '../../connections'
 
 const HeaderContainer = () => {
-	const { isOpen, onToggle } = useDisclosure()
-	const isDisplay = isOpen ? 'block' : 'none'
-
 	return (
 		<Header>
 			<Header.Wrapper>
@@ -18,17 +10,25 @@ const HeaderContainer = () => {
 					<Logo.Text>Arcane 404 Blog App</Logo.Text>
 				</Logo>
 
-				<NavBar display={ isDisplay }>
-					<NavBar.List>
-						<NavBar.Item><NavBar.Link to="/">Home</NavBar.Link></NavBar.Item>
-						<NavBar.Item><NavBar.Link to="/login">Login</NavBar.Link></NavBar.Item>
-						<NavBar.Item><NavBar.Link to="/signup">Sign Up</NavBar.Link></NavBar.Item>
-					</NavBar.List>
-				</NavBar>
+				<NavBar isLazy>
+					{
+						({ isOpen }) => (
+							<>
+								<NavBar.Button>
+									{ isOpen ? <NavBar.Close /> : <NavBar.Open /> }
+								</NavBar.Button>
 
-				<MenuToggle onClick={ onToggle }>
-					{ isOpen ? <MenuToggle.Close /> : <MenuToggle.Open /> }
-				</MenuToggle>
+								<NavBar.List>
+									<NavBar.Item><NavBar.Path to="/">Home</NavBar.Path></NavBar.Item>
+									<NavBar.Item><NavBar.Path to="/search">Search</NavBar.Path></NavBar.Item>
+									<NavBar.Line />
+									<NavBar.Item><NavBar.Path to="/login">Login</NavBar.Path></NavBar.Item>
+									<NavBar.Item><NavBar.Path to="/signup">Sign Up</NavBar.Path></NavBar.Item>
+								</NavBar.List>
+							</>
+						)
+					}
+				</NavBar>
 			</Header.Wrapper>
 		</Header>
 	)
