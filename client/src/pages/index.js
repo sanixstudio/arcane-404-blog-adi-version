@@ -1,2 +1,6 @@
 export { default as HomePage } from './_HomePage'
 export { default as SearchPage } from './_SearchPage'
+export { default as PostPage } from './_PostPage'
+export { default as ContentPage } from './_ContentPage'
+export { default as LoginPage } from './_LoginPage'
+export { default as RegisterPage } from './_RegisterPage'
