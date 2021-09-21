@@ -1,15 +1,20 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { Headers } from './containers'
+import { HeaderOption, FooterNavigation } from './containers'
 import {
-	ContentPage, HomePage, LoginPage, PostPage, RegisterPage, SearchPage 
+	LoginPage,
+	RegisterPage,
+	HomePage,
+	PostPage,
+	ContentPage,
+	SearchPage
 } from './pages'
 
 const App = () => {
 	return (
 		<>
-			<Headers />
+			<HeaderOption />
 			<Switch>
 				<Route exact path="/" component= { HomePage } /> {/* Home */}
 				<Route path="/search" component= { SearchPage } /> {/* Search */}
@@ -18,6 +23,7 @@ const App = () => {
 				<Route path="/login" component= { LoginPage } /> {/* Login */}
 				<Route path="/register" component= { RegisterPage } /> {/* Register */}
 			</Switch>
+			<FooterNavigation />
 		</>
 	)
 }
