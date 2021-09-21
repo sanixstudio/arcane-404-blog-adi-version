@@ -1,4 +1,5 @@
 import NewPost from './_PostForm.jsx'
+import { SelectOption } from './_PostForm.styles.js'
 
 export default function NewPostForm () {
 	return (
@@ -7,11 +8,11 @@ export default function NewPostForm () {
     	<NewPost.FormControler isRequired>
       	<NewPost.FormLabeling>Topic</NewPost.FormLabeling>
       	<NewPost.FormSelect placeholder="Select Topic">
-      	<option value="option1">Front-end</option>
-      	<option value="option2">Back-end</option>
-      	<option value="option3">UX/UI</option>
-      	<option value="option3">Database</option>
-      	<option value="option3">Design</option>
+					<NewPost.SelectOption value="option1">Front-end</NewPost.SelectOption>
+					<NewPost.SelectOption value="option2">Back-end</NewPost.SelectOption>
+					<NewPost.SelectOption value="option3">UX/UI</NewPost.SelectOption>
+					<NewPost.SelectOption value="option3">Database</NewPost.SelectOption>
+					<NewPost.SelectOption value="option3">Design</NewPost.SelectOption>
       	</NewPost.FormSelect>
     	</NewPost.FormControler>
     	<NewPost.FormControler isRequired>

@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import {
 	chakra,
 	FormControl,
@@ -33,6 +34,8 @@ export const FormLabeling = chakra(FormLabel, {
 export const FormSelect = chakra(Select, {
 	baseStyle: {}
 })
+
+export const SelectOption = styled.option``
 
 export const FormInput = chakra(Input, {
 	baseStyle: {}

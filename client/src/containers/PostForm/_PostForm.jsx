@@ -4,6 +4,7 @@ import {
 	FormControler,
 	FormLabeling,
 	FormSelect,
+	SelectOption,
 	FormInput,
 	FormButton,
 	FormTextArea
@@ -32,6 +33,11 @@ NewPost.FormLabeling = function NewPostFormLabeling ({ children, ...props })
 NewPost.FormSelect = function NewPostFormSelect ({ children, ...props })
 {
 	return <FormSelect { ...props }>{children}</FormSelect>
+}
+
+NewPost.SelectOption = function NewPostSelectOption ({ children, ...props })
+{
+	return <SelectOption { ...props }>{children}</SelectOption>
 }
 
 NewPost.FormInput = function NewPostFormInput ({ children, ...props })
