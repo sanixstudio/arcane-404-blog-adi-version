@@ -1,9 +1,11 @@
 import React from 'react'
 
+import { PostForm } from '../../containers'
+
 const PostPage = () => {
 	return (
 		<div>
-            Post Page (Submit)
+			<PostForm />
 		</div>
 	)
 }
