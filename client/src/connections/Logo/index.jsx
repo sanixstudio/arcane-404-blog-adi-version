@@ -1,6 +1,7 @@
 import React from 'react'
 import {
 	LogoBox,
+	LogoIcon,
 	LogoImage,
 	LogoText
 } from './_Logo.styles'
@@ -9,7 +10,11 @@ export default function Logo ({ children, ...props }) {
 	return <LogoBox { ...props }>{ children }</LogoBox>
 }
 
-Logo.Image = function LImages ({ ...props }) {
+Logo.Icon = function LIcon (props) {
+	return <LogoIcon { ...props } />
+}
+
+Logo.Image = function LImages (props) {
 	return <LogoImage { ...props } />
 }
 

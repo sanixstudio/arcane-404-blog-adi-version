@@ -235,6 +235,7 @@ MONGO_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[po
 - [ascii-tree-generator.com/](https://ascii-tree-generator.com/)
 - [codestream.com/](https://www.codestream.com/)
 - [thunderclient.io/](https://www.thunderclient.io/)
+- [app.uploadcare.com/](https://app.uploadcare.com/)
 
 ## Original Contributors
 
