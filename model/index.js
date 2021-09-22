@@ -1,1 +1,2 @@
-export { default as BlogModel } from './BlogModel'
+export { default as BlogModel } from './Blog.model.js'
+export { default as VoteModel } from './Vote.model.js'

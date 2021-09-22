@@ -2,7 +2,8 @@ import express from 'express'
 import logger from 'morgan'
 import cors from 'cors'
 
-import apiRoutes from './routes/apiRoutes.js'
+import blogRoutes from './routes/Blog.routes.js'
+import voteRoutes from './routes/Vote.routes.js'
 
 const app = express()
 
@@ -13,7 +14,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // apiRoute
-app.use('/api', apiRoutes)
+app.use('/api', blogRoutes)
+app.use('/api', voteRoutes)
 
 app.get('/', (req, res) => {
 	res.send('index page')
