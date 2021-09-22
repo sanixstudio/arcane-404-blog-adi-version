@@ -1,3 +1,5 @@
 export { default as HeaderOption } from './HeaderOption'
 export { default as FooterNavigation } from './FooterNavigation'
 export { default as PostForm } from './PostForm'
+export { default as LoginForm } from './LoginForm'
+export { default as RegisterForm } from './RegisterForm'
