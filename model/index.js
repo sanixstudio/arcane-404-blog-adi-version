@@ -1,5 +1,2 @@
-//export { default as BlogModel } from './BlogModel'
-export default {
-	User: import('./User.model'),
-	Blog: import('./BlogModel')
-}
+export { default as User } from './User.model.js'
+export { default as Blog } from './BlogModel.js'
