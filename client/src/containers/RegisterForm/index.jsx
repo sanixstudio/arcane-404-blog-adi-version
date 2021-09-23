@@ -3,7 +3,7 @@ import Register from './_RegisterForm'
 
 const RegisterForm = () => {
 
-	// submit user login
+	// submit user login & redirect user to login page
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		console.log('submit login form')
@@ -11,7 +11,7 @@ const RegisterForm = () => {
 
 	return (
 		<Register onSubmit={ handleSubmit }>
-			<Register.Heading>Register</Register.Heading>
+			<Register.Heading>SignUp</Register.Heading>
 
 			{/* email input */}
 			<Register.Control isRequired>
@@ -25,14 +25,14 @@ const RegisterForm = () => {
 			</Register.Control>
 
 			{/* password input */}
-			<Register.Control isRequired>
+			<Register.Control isInvalid>
 				<Register.Label htmlFor="password">Password</Register.Label>
 				<Register.Input
 					type="text"
 					id="password"
 					placeholder="password here"
 				/>
-				{ false && <Register.Error></Register.Error> }
+				{ true && <Register.Error>error</Register.Error> }
 			</Register.Control>
 
 			{/* confirm password input */}

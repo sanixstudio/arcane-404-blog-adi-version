@@ -14,6 +14,13 @@ const overrides = {
 		medium: 600,
 		bold: 700
 	}
+	// ,	styles: {
+	// 	global: {
+	// 		'html, body': {
+	// 			border: '3px solid grey'
+	// 		}
+	// 	}
+	// }
 }
 
 const customTheme = extendTheme(overrides)

@@ -1,2 +1,2 @@
-export { default as ChakraContextProvider } from './ChakraContextProvider'
-export { default as customTheme } from './customTheme'
+export { default as ChakraProvider } from './_ChakraProvider'
+export { default as customTheme } from './_customTheme'

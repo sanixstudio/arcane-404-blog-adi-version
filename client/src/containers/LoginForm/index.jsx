@@ -1,12 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Login from './_LoginForm'
+import { AuthConsumer } from '../../context'
 
 const LoginForm = () => {
+	const navigate = useNavigate()
+	// const { state } = useLocation() // state.path ||
+	const { login } = AuthConsumer()
 
 	// submit user login
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		console.log('submit login form')
+		login().then(() => navigate('/'))
 	}
 
 	return (
@@ -14,7 +20,7 @@ const LoginForm = () => {
 			<Login.Heading>Login</Login.Heading>
 
 			{/* email input */}
-			<Login.Control isRequired>
+			<Login.Control>
 				<Login.Label htmlFor="email">Email</Login.Label>
 				<Login.Input
 					type="text"
@@ -25,7 +31,7 @@ const LoginForm = () => {
 			</Login.Control>
 
 			{/* password input */}
-			<Login.Control isRequired>
+			<Login.Control>
 				<Login.Label htmlFor="password">Password</Login.Label>
 				<Login.Input
 					type="text"

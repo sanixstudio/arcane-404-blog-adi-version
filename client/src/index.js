@@ -1,17 +1,20 @@
 import { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+import { ChakraProvider } from './themes'
+import { AuthProvider } from './context/provider'
 
 import App from './App'
-import { ChakraContextProvider } from './themes'
 
 render(
 	<StrictMode>
-		<ChakraContextProvider>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
-		</ChakraContextProvider>
+		<ChakraProvider>
+			<AuthProvider>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</AuthProvider>
+		</ChakraProvider>
 	</StrictMode>,
 	document.getElementById('root')
 )

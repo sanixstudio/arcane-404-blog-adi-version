@@ -1,2 +1,2 @@
-// export _ from './posts.json'
-// export _ from './user.json'
+export { default as posts } from './_posts.json'
+export { default as user } from './_user.json'
