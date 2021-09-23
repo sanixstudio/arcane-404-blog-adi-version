@@ -9,10 +9,10 @@ const FooterNavigation = () => {
 					<Footer.Path to="/">
 						<Footer.Center> <Footer.Home /> Home </Footer.Center>
 					</Footer.Path>
-					<Footer.Path to="search">
+					<Footer.Path to="/search">
 						<Footer.Center> <Footer.Search /> Search </Footer.Center>
 					</Footer.Path>
-					<Footer.Path to="submit">
+					<Footer.Path to="/admin/post">
 						<Footer.Center>	<Footer.Post /> Post </Footer.Center>
 					</Footer.Path>
 				</Footer.Menu>
