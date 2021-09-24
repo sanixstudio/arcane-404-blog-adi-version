@@ -1,8 +1,12 @@
 import express from 'express'
 
-import {
-	register, loginJWT, validateToken 
-} from '../controllers/User.controllers.js'
+import { UserControllers } from '../controllers/index.js'
+
+const {
+	register,
+	loginJWT,
+	validateToken
+} = UserControllers
 
 const userRouter = express.Router()
 
