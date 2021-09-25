@@ -1,11 +1,19 @@
 import {
 	chakra,
-	Box,
-	Text
+	Image,
+	Heading
 } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 import { Icon } from '../../components'
 
-export const LogoBox = chakra(Box, {})
+export const LogoBox = chakra(Link, {
+	baseStyle: {
+		border: '1px',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	}
+})
 
 export const LogoIcon = chakra(Icon.LogoIcon, {
 	baseStyle: {
@@ -17,9 +25,9 @@ export const LogoIcon = chakra(Icon.LogoIcon, {
 
 export const LogoImage = chakra(Image, {})
 
-export const LogoText = chakra(Text, {
+export const LogoHeading = chakra(Heading, {
 	baseStyle: {
-		fontSize: 'lg',
+		// fontSize: 'lg',
 		fontWeight: 'bold'
 	}
 })

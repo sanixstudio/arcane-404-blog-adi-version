@@ -1,38 +1,23 @@
 import React from 'react'
 import {
-	RegisterForm,
+	RegisterFormik,
+	RegisterBox,
 	RegisterHeading,
-	RegisterControl,
-	RegisterLabel,
-	RegisterInput,
-	RegisterError,
 	RegisterSubmit
 } from './_RegisterForm.styles'
 
 export default function Register ({ children, ...props }) {
-	return <RegisterForm { ...props }>{ children }</RegisterForm>
+	return <RegisterFormik { ...props }>{ children }</RegisterFormik>
 }
 
-Register.Heading = function RHeading ({ children, ...props }) {
+Register.Form = function LForm ({ children, ...props }) {
+	return <RegisterBox { ...props }>{ children }</RegisterBox>
+}
+
+Register.Heading = function LHeading ({ children, ...props }) {
 	return <RegisterHeading { ...props }>{ children }</RegisterHeading>
 }
 
-Register.Control = function RControl ({ children, ...props }) {
-	return <RegisterControl { ...props }>{ children }</RegisterControl>
-}
-
-Register.Label = function RLabel ({ children, ...props }) {
-	return <RegisterLabel { ...props }>{ children }</RegisterLabel>
-}
-
-Register.Input = function RInput (props) {
-	return <RegisterInput { ...props } />
-}
-
-Register.Error = function RError ({ children, ...props }) {
-	return <RegisterError { ...props }>{ children }</RegisterError>
-}
-
-Register.Submit = function RSubmit ({ children, ...props }) {
-	return <RegisterSubmit { ...props } type="submit">{ children }</RegisterSubmit>
+Register.Submit = function LSubmit ({ children, text, ...props }) {
+	return <RegisterSubmit { ...props } type="submit">{ text || children }</RegisterSubmit>
 }

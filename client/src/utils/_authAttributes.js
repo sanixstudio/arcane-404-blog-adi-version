@@ -1,0 +1,5 @@
+export const AVATAR = 'avatar'
+export const USERNAME = 'username'
+export const EMAIL = 'email'
+export const PASSWORD = 'password'
+export const PASSWORD_CONFIRM = 'passwordConfirm'

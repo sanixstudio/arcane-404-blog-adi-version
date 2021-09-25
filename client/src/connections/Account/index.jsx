@@ -1,10 +1,7 @@
 import React from 'react'
-// import { IcoAutton } from '@chakra-ui/react'
 import {
 	AccountBox,
 	AccountButton,
-	// AccountClose,
-	// AccountOpen,
 	AccountIcon,
 	AccountLine,
 	AccountList,
@@ -23,14 +20,6 @@ Account.Button = function AButton ({ children, ...props }) {
 Account.Icon = function AIcon (props) {
 	return <AccountIcon { ...props } />
 }
-
-// Account.Close = function AClose (props) {
-// 	return <AccountClose { ...props } />
-// }
-
-// Account.Open = function AOpen (props) {
-// 	return <AccountOpen { ...props } />
-// }
 
 Account.Line = function ALine (props) {
 	return <AccountLine { ...props } />

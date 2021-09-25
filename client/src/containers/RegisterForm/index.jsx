@@ -1,53 +1,42 @@
 import React from 'react'
 import Register from './_RegisterForm'
+import { TextField } from '../../connections'
+import { authAttributes, registerSchemaProps } from '../../utils'
+const {
+	EMAIL,
+	PASSWORD,
+	PASSWORD_CONFIRM
+} = authAttributes
 
 const RegisterForm = () => {
-
-	// submit user login & redirect user to login page
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		console.log('submit login form')
-	}
-
 	return (
-		<Register onSubmit={ handleSubmit }>
-			<Register.Heading>SignUp</Register.Heading>
+		<Register { ...registerSchemaProps }>
+			{ (props) => (
+				<Register.Form>
+					<Register.Heading>Register Form</Register.Heading>
 
-			{/* email input */}
-			<Register.Control isRequired>
-				<Register.Label htmlFor="email">Email</Register.Label>
-				<Register.Input
-					type="text"
-					id="email"
-					placeholder="email here"
-				/>
-				{ false && <Register.Error>error</Register.Error> }
-			</Register.Control>
+					<TextField
+						name={ EMAIL }
+						label="Email"
+					/>
 
-			{/* password input */}
-			<Register.Control isInvalid>
-				<Register.Label htmlFor="password">Password</Register.Label>
-				<Register.Input
-					type="text"
-					id="password"
-					placeholder="password here"
-				/>
-				{ true && <Register.Error>error</Register.Error> }
-			</Register.Control>
+					<TextField
+						name={ PASSWORD }
+						label="Password"
+					/>
 
-			{/* confirm password input */}
-			<Register.Control isRequired>
-				<Register.Label htmlFor="password">Confirm Password</Register.Label>
-				<Register.Input
-					type="text"
-					id="password"
-					placeholder="confirm password here"
-				/>
-				{ false && <Register.Error></Register.Error> }
-			</Register.Control>
+					<TextField
+						name={ PASSWORD_CONFIRM }
+						label="Confirm Password"
+					/>
 
-			{/* submit button */}
-			<Register.Submit>Submit</Register.Submit>
+					<Register.Submit
+						text="Register"
+						// disabled={ !props.isValid }
+						// isLoading={ props.isSubmitting }
+					/>
+				</Register.Form>
+			)}
 		</Register>
 	)
 }

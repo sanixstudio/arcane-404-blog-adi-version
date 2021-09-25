@@ -3,13 +3,15 @@ import { Wrapper } from '../../components'
 
 export const HeaderBox = chakra(Box, {
 	baseStyle: {
-		bg: 'silver',
 		w: '100%',
-		h: '6vh'
-	},
-	defaultProps: {
-		as: 'header'
+		minH: '6vh',
+		position: 'sticky',
+		top: 0
 	}
 })
 
-export const HeaderWrapper = chakra(Wrapper, {})
+export const HeaderWrapper = chakra(Wrapper, {
+	baseStyle: {
+		bg: 'white'
+	}
+})
