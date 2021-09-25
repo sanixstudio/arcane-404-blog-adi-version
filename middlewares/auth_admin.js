@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const authJWT = async (request, response, next) => {
+const authJWTAdmin = async (request, response, next) => {
 	// check for token
 	const token = request.header('x-auth-token')
 	if (!token) {
@@ -8,9 +8,17 @@ const authJWT = async (request, response, next) => {
 	}
 	try {
 		const verifiedToken = jwt.verify(token, process.env.JWT_SECRET)
+
 		if (!verifiedToken.user) {
 			return response.status(401).json({ message: 'Invalid token format!' })
 		}
+
+		// check if admin role
+		const { role } = verifiedToken.user
+		if (role !== 'ADMIN') {
+			return response.status(401).json({ message: 'Unauthorized role!' })
+		}
+
 		// set req.auth
 		request.auth = { ...request.auth,
 			id: verifiedToken.id,
@@ -27,4 +35,4 @@ const authJWT = async (request, response, next) => {
 
 }
 
-export default authJWT
+export default authJWTAdmin
