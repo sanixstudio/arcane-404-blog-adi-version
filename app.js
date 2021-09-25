@@ -9,6 +9,7 @@ import blogRoutes from './routes/Blog.routes.js'
 import voteRoutes from './routes/Vote.routes.js'
 
 import auth from './middlewares/auth.js'
+import authAdmin from './middlewares/auth_admin.js'
 
 const app = express()
 
@@ -23,11 +24,6 @@ app.use('/api/users', userRoutes)
 app.use('/api', blogRoutes)
 app.use('/api', voteRoutes)
 
-
-// EDIT: can we get the '/' route ready for react
-app.get('/', (req, res) => {
-	res.send('index page')
-})
 
 // serve React static build if in production
 if (process.env.NODE_ENV === 'production') {
