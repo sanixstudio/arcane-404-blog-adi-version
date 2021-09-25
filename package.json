@@ -22,7 +22,7 @@
     "dev:s": "nodemon index.js",
     "dev:db": "node temp/index.js",
     "dev:c": "cd client && npm start",
-    "dev": "concurrently --kill-others-on-fail -n 'server,client' -c 'yellow,white' npm:\"dev:s\" npm:\"dev:c\"",
+    "dev": "concurrently -k -n 'server,client' -c 'yellow,white' npm:\"dev:s\" npm:\"dev:c\"",
     "build": "npm install && cd client && npm install && npm run build",
     "build:dev": "cd client && npm run build",
     "prod:dev": "cd client && serve build",
@@ -47,7 +47,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
-    "mongoose": "^6.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
     "yup": "^0.32.9"
   },
@@ -56,7 +57,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-react": "^7.25.2",
+    "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-security": "^1.4.0",
     "husky": "^7.0.2",
@@ -66,5 +67,13 @@
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "serve": "^12.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arcane-404/arcane-404-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arcane-404/arcane-404-blog/issues"
+  },
+  "homepage": "https://github.com/Arcane-404/arcane-404-blog#readme"
 }

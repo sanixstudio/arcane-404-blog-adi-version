@@ -20,7 +20,13 @@
     "plugin:security/recommended"
     // "prettier"
   ],
-  "plugins": ["react", "react-hooks", "import", "security"],
+  "plugins": [
+    //
+    "react",
+    "react-hooks",
+    "import",
+    "security"
+  ],
   "overrides": [
     {
       "files": ["**/*.stories.*"],
@@ -31,11 +37,11 @@
     /* JAVASCRIPT */
     "no-var": "warn",
     "no-shadow": "warn",
-    "max-len": ["warn", { "code": 160 }],
+    // "max-len": ["warn", { "code": 160 }],
     "semi": ["warn", "never"],
     "indent": ["warn", "tab"],
     "comma-dangle": ["warn", "never"],
-    "quotes": ["warn", "single", { "allowTemplateLiterals": true }],
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
     // "arrow-parens": ["warn", "as-needed", { "requireForBlockBody": true }],
     // "arrow-body-style": ["warn", "as-needed"],
     "space-infix-ops": "warn",
@@ -55,15 +61,18 @@
 
     /* REACT */
     "jsx-quotes": ["warn", "prefer-double"],
+    "react/jsx-uses-vars": "warn",
     "react/jsx-pascal-case": "warn",
     "react/jsx-first-prop-new-line": ["warn", "multiline"],
     "react/jsx-max-props-per-line": ["warn", { "maximum": 3 }],
     "react/jsx-closing-bracket-location": ["warn", "tag-aligned"],
+    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
+    "react/no-unescaped-entities": ["warn", { "forbid": ["<", ">", "{", "}"] }],
     "react/jsx-curly-spacing": [
       "warn",
       {
-        "when": "always",
-        "children": true,
+        "when": "never",
+        "attributes": { "when": "always" },
         "spacing": { "objectLiterals": "never" }
       }
     ],
@@ -86,8 +95,8 @@
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
     "react/jsx-boolean-value": 0,
+    "react/require-default-props": 0,
     // "react/no-unused-prop-styles": "warn"
-    // "react/require-default-props": "warn"
     // "react/deconstructing-assignment": "warn"
 
     "react-hooks/rules-of-hooks": "warn",
