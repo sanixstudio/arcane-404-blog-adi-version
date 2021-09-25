@@ -3,10 +3,9 @@ import logger from 'morgan'
 import cors from 'cors'
 import path from 'path'
 
-// EDIT: we can make it into a single import
-import userRoutes from './routes/User.routes.js'
-import blogRoutes from './routes/Blog.routes.js'
-import voteRoutes from './routes/Vote.routes.js'
+import {
+	blogRoutes, userRoutes, voteRoutes 
+} from './routes/index.js'
 
 import auth from './middlewares/auth.js'
 import authAdmin from './middlewares/auth_admin.js'
