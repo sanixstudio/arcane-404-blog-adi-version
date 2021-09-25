@@ -4,9 +4,6 @@ const useAuth = () => {
 	const [ isAuth, setAuthed ] = useState(false)
 	// const [ isAdmin, setAdmin ] = useState(false)
 
-	// , useEffect
-	// useEffect(() => { console.log(isAuth)}, [ isAuth ])
-
 	return {
 		isAuth,
 		login: () => new Promise((resolve) => {

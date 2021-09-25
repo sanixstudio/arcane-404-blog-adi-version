@@ -17,16 +17,6 @@ export const AccountButton = chakra(MenuButton, {
 	baseStyle: {}
 })
 
-// export const AccountClose = chakra(Icon.CloseIcon, {
-// 	baseStyle: {}
-// })
-
-// export const AccountOpen = chakra(Icon.OpenIcon, {
-// 	baseStyle: {
-// 		fontSize: '1.25em'
-// 	}
-// })
-
 export const AccountIcon = chakra(Icon.AccountIcon, {
 	baseStyle: {
 		w: '2em',

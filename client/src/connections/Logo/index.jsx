@@ -3,7 +3,7 @@ import {
 	LogoBox,
 	LogoIcon,
 	LogoImage,
-	LogoText
+	LogoHeading
 } from './_Logo.styles'
 
 export default function Logo ({ children, ...props }) {
@@ -18,6 +18,6 @@ Logo.Image = function LImages (props) {
 	return <LogoImage { ...props } />
 }
 
-Logo.Text = function LText ({ children, ...props }) {
-	return <LogoText { ...props } as="h1">{ children }</LogoText>
+Logo.Heading = function LHeading ({ children, ...props }) {
+	return <LogoHeading { ...props } as="h1">{ children }</LogoHeading>
 }

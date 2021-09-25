@@ -1,14 +1,10 @@
-import {
-	chakra,
-	Heading,
-	FormControl,
-	FormLabel,
-	Input,
-	FormErrorMessage,
-	Button
-} from '@chakra-ui/react'
+import { chakra, Heading } from '@chakra-ui/react'
+import { Formik, Form } from 'formik'
+import { Button } from '../../components'
 
-export const RegisterForm = chakra('form', {
+export const RegisterFormik = chakra(Formik, {})
+
+export const RegisterBox = chakra(Form, {
 	baseStyle: {
 		m: 2,
 		border: '1px',
@@ -20,22 +16,6 @@ export const RegisterHeading = chakra(Heading, {
 	baseStyle: {
 	  my: '1em'
 	}
-})
-
-export const RegisterControl = chakra(FormControl, {
-	baseStyle: {}
-})
-
-export const RegisterLabel = chakra(FormLabel, {
-	baseStyle: {}
-})
-
-export const RegisterInput = chakra(Input, {
-	baseStyle: {}
-})
-
-export const RegisterError = chakra(FormErrorMessage, {
-	baseStyle: {}
 })
 
 export const RegisterSubmit = chakra(Button, {

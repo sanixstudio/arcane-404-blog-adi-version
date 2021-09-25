@@ -1,48 +1,34 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import Login from './_LoginForm'
-import { AuthConsumer } from '../../context'
+import { TextField } from '../../connections'
+import { authAttributes, loginSchemaProps } from '../../utils'
+const { EMAIL, PASSWORD } = authAttributes
 
 const LoginForm = () => {
-	const navigate = useNavigate()
-	// const { state } = useLocation() // state.path ||
-	const { login } = AuthConsumer()
-
-	// submit user login
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		console.log('submit login form')
-		login().then(() => navigate('/'))
-	}
 
 	return (
-		<Login onSubmit={ handleSubmit }>
-			<Login.Heading>Login</Login.Heading>
+		<Login { ...loginSchemaProps }>
+			{ (props) => (
+				<Login.Form>
+					<Login.Heading>Login Form</Login.Heading>
 
-			{/* email input */}
-			<Login.Control>
-				<Login.Label htmlFor="email">Email</Login.Label>
-				<Login.Input
-					type="text"
-					id="email"
-					placeholder="email here"
-				/>
-				{ false && <Login.Error>error</Login.Error> }
-			</Login.Control>
+					<TextField
+						name={ EMAIL }
+						label="Email"
+					/>
 
-			{/* password input */}
-			<Login.Control>
-				<Login.Label htmlFor="password">Password</Login.Label>
-				<Login.Input
-					type="text"
-					id="password"
-					placeholder="password here"
-				/>
-				{ false && <Login.Error></Login.Error> }
-			</Login.Control>
+					<TextField
+						name={ PASSWORD }
+						label="Password"
+					/>
 
-			{/* submit button */}
-			<Login.Submit>Submit</Login.Submit>
+					<Login.Submit
+						text="Login"
+						// disabled={ !props.isValid }
+						// isLoading={ props.isSubmitting }
+					/>
+				</Login.Form>
+			)}
 		</Login>
 	)
 }

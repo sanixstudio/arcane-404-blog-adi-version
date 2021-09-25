@@ -1,16 +1,10 @@
-// import styled from '@emotion/styled'
-import {
-	chakra,
-	Heading,
-	FormControl,
-	FormLabel,
-	Input,
-	FormErrorMessage,
-	Button
-} from '@chakra-ui/react'
+import { chakra, Heading } from '@chakra-ui/react'
+import { Formik, Form } from 'formik'
+import { Button } from '../../components'
 
-// export const LoginForm = styled.form``
-export const LoginForm = chakra('form', {
+export const LoginFormik = chakra(Formik, {})
+
+export const LoginBox = chakra(Form, {
 	baseStyle: {
 		m: 2,
 		border: '1px',
@@ -22,22 +16,6 @@ export const LoginHeading = chakra(Heading, {
 	baseStyle: {
 	  my: '1em'
 	}
-})
-
-export const LoginControl = chakra(FormControl, {
-	baseStyle: {}
-})
-
-export const LoginLabel = chakra(FormLabel, {
-	baseStyle: {}
-})
-
-export const LoginInput = chakra(Input, {
-	baseStyle: {}
-})
-
-export const LoginError = chakra(FormErrorMessage, {
-	baseStyle: {}
 })
 
 export const LoginSubmit = chakra(Button, {
