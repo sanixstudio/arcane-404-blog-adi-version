@@ -1,0 +1,20 @@
+[
+  {
+    "id": 111,
+    "username": "anonymous",
+    "email": "qwe@ewq.com",
+    "passowrd": "qwe123"
+  },
+  {
+    "id": 222,
+    "username": "anonymous",
+    "email": "qaz@zaq.com",
+    "passowrd": "qazwsx"
+  },
+  {
+    "id": 333,
+    "username": "anonymous",
+    "email": "zxc@cxz.com",
+    "passowrd": "zxcasd"
+  }
+]

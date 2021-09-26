@@ -8,6 +8,15 @@ const TextFieldConnection = ({
 	label = 'Text',
 	placeholder = ''
 }) => {
+
+	const inputOptions = {
+		autoComplete: 'off',
+		autoCorrect: 'off',
+		autoCapitalize: 'off',
+		spellCheck: 'false',
+		// autoFocus: { true }
+	}
+
 	return (
 		<TextField name={ name }>
 			{({ field, meta }) => (
@@ -19,6 +28,7 @@ const TextFieldConnection = ({
 						id={ name }
 						name={ name }
 						placeholder={ placeholder }
+						{ ...inputOptions }
 						// { ...field }
 						value={ field.value }
 						onChange={ field.onChange }

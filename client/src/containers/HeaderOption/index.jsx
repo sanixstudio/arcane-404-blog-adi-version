@@ -19,7 +19,7 @@ const HeaderOption = () => {
 			<Header.Wrapper>
 				<Logo to="/">
 					<Logo.Icon />
-					<Logo.Heading>A404</Logo.Heading>
+					<Logo.Heading>A 404 B</Logo.Heading>
 				</Logo>
 
 				<Account isLazy>
