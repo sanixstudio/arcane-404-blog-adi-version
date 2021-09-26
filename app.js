@@ -3,9 +3,7 @@ import logger from 'morgan'
 import cors from 'cors'
 import path from 'path'
 
-import {
-	blogRoutes, userRoutes, voteRoutes 
-} from './routes/index.js'
+import { blogRoutes, userRoutes } from './routes/index.js'
 
 import auth from './middlewares/auth.js'
 import authAdmin from './middlewares/auth_admin.js'
@@ -20,8 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // EDIT: figure out path setup
 app.use('/api/users', userRoutes)
-app.use('/api', blogRoutes)
-app.use('/api', voteRoutes)
+app.use('/api/blog', blogRoutes)
 
 
 // serve React static build if in production
