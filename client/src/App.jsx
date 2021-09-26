@@ -1,7 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ProtectedRoute } from './routes'
-import { HeaderOption, FooterNavigation } from './containers'
+import {
+	HeaderOption,
+	FooterNavigation,
+	PostCard
+} from './containers'
 import {
 	LoginPage,
 	RegisterPage,
@@ -25,6 +29,7 @@ const App = () => {
 				<ProtectedRoute path="/login" element={ <LoginPage /> } /> {/* Login */}
 				<ProtectedRoute path="/register" element={ <RegisterPage /> } /> {/* Register */}
 			</Routes>
+			<PostCard />
 			<FooterNavigation />
 		</>
 	)
