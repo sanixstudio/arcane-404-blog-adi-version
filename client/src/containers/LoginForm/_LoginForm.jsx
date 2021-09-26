@@ -3,7 +3,9 @@ import {
 	LoginFormik,
 	LoginBox,
 	LoginHeading,
-	LoginSubmit
+	LoginSubmit,
+	LoginText,
+	LoginPath
 } from './_LoginForm.styles'
 
 export default function Login ({ children, ...props }) {
@@ -20,4 +22,12 @@ Login.Heading = function LHeading ({ children, ...props }) {
 
 Login.Submit = function LSubmit ({ children, text, ...props }) {
 	return <LoginSubmit { ...props } type="submit">{ text || children }</LoginSubmit>
+}
+
+Login.Text = function LText ({ children, ...props }) {
+	return <LoginText { ...props }>{ children }</LoginText>
+}
+
+Login.Path = function LPath ({ children, ...props }) {
+	return <LoginPath { ...props }>{ children }</LoginPath>
 }

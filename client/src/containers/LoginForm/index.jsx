@@ -1,32 +1,32 @@
 import React from 'react'
 import Login from './_LoginForm'
-import { TextField } from '../../connections'
-import { authAttributes, loginSchemaProps } from '../../utils'
+import { Alert, TextField } from '../../connections'
+import { useLogin } from '../../hooks'
+import { authAttributes } from '../../json'
 const { EMAIL, PASSWORD } = authAttributes
 
 const LoginForm = () => {
+
+	const { message, loginSchemaProps } = useLogin()
 
 	return (
 		<Login { ...loginSchemaProps }>
 			{ (props) => (
 				<Login.Form>
-					<Login.Heading>Login Form</Login.Heading>
+					<Login.Heading>Welcome Back</Login.Heading>
 
-					<TextField
-						name={ EMAIL }
-						label="Email"
-					/>
+					<TextField name={ EMAIL } label="Email" />
 
-					<TextField
-						name={ PASSWORD }
-						label="Password"
-					/>
+					<TextField name={ PASSWORD } label="Password" />
 
-					<Login.Submit
-						text="Login"
-						// disabled={ !props.isValid }
-						// isLoading={ props.isSubmitting }
-					/>
+					<Alert status={ message.status } text={ message.text } />
+
+					<Login.Submit text="Login" isLoading={ props.isSubmitting } />
+
+					<Login.Text>
+						don't have an account?{' '}
+						<Login.Path to="/register">sign up</Login.Path>
+					</Login.Text>
 				</Login.Form>
 			)}
 		</Login>
