@@ -4,7 +4,7 @@ import {
 
 export const PostCardBox = chakra(Box, {
 	baseStyle: {
-		m: 10,
+		m: 5,
 		border: '1px'
 	}
 })
