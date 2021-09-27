@@ -406,6 +406,23 @@ const LoginFormContainer = () => {
 export { default as LoginForm } from './LoginForm'
 ```
 
+## pages/
+
+```jsx
+import React from 'react'
+import { LoginForm } from '../containers'
+
+const HomePage = () => {
+	return (
+		<>
+			<LoginForm />
+		</>
+	)
+}
+```
+
+## DONE
+
 </details>
 
 <br />
