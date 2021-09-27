@@ -11,7 +11,8 @@ blogRouter
 	.put('/:id', BlogControllers.updateBlogById)
 	.delete('/:id', BlogControllers.deleteBlogById)
 	// single route for upvote + downvote
-	.put('/:id/votes')
+	.put('/:id/upvote', authJWT, BlogControllers.upvoteBlog)
+	.put('/:id/downvote', authJWT, BlogControllers.downvoteBlog)
 
 
 export default blogRouter

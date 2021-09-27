@@ -77,3 +77,56 @@ export const deleteBlogById = async (req, res) => {
 	}
 }
 
+// Add user Id to blog upvote
+export const upvoteBlog = async (req, res) => {
+	try {
+		// console.log(req.params, req.auth)
+		const { id: blogId } = req.params
+		const { id, username } = req.auth
+		// Find Blog By Id
+		const upvote = await Blog.findByIdAndUpdate(
+			{ _id: blogId },
+			{
+				$push: {
+					upvotes: {
+						$each: [
+							{ id, username }
+						]
+					}
+				}
+			},
+			{ new: true }
+		)
+		return res.status(200).json(upvote)
+
+	} catch (err) {
+		return res.status(500).json({ error: err.message })
+	}
+}
+
+// Add user id to blog downvote
+export const downvoteBlog = async (req, res) => {
+	try {
+		const { id: blogId } = req.params
+		const { id, username } = req.auth
+		// console.log(username)
+		const downvote = await Blog.findByIdAndUpdate(
+			{ _id: blogId },
+			{
+				$push: {
+					downvotes: {
+						$each: [
+							{ id, username }
+						]
+					}
+				}
+			},
+			{ new: true }
+		)
+
+		res.status(200).json(downvote)
+
+	} catch (err) {
+		res.status(500).json({ error: err.message })
+	}
+}
