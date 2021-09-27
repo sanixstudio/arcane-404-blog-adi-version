@@ -4,9 +4,7 @@ import cors from 'cors'
 import path from 'path'
 
 import { blogRoutes, userRoutes } from './routes/index.js'
-
-import auth from './middlewares/auth.js'
-import authAdmin from './middlewares/auth_admin.js'
+// import { authJWT, authJWTAdmin } from './middlewares/index.js'
 
 const app = express()
 
@@ -16,10 +14,9 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// EDIT: figure out path setup
-app.use('/api/users', userRoutes)
+// routes setup
+app.use('/api/user', userRoutes)
 app.use('/api/blog', blogRoutes)
-
 
 // serve React static build if in production
 if (process.env.NODE_ENV === 'production') {

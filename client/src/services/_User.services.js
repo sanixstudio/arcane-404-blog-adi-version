@@ -1,23 +1,20 @@
-// import axios from 'axios'
-import {
-	isAlreadyUser,
-	isValidUser,
-	isValidToken
-} from '../utils/_helpers'
+import axios from 'axios'
 
 // POST USER in Register Page
 export const registerUser = async (body) => {
 	const PATH = '/api/user/register'
 
 	try {
-		// const { data } = await axios.post(PATH, body)
-		const response = await isAlreadyUser(body)
-		if (response) throw new Error('email is already in use')
-		else return {
+		const { data } = await axios.post(PATH, body)
+		return {
 			status: 'success',
-			data: body
+			data
 		}
-	} catch (error) { throw error }
+	} catch (error) {
+		// console.warn('error services', error.response)
+		if (!error?.response?.data) throw Error('Unknown error')
+		else throw Error(error.response.data.message)
+	}
 }
 
 // POST USER in Login Page
@@ -25,27 +22,29 @@ export const loginUser = async (body) => {
 	const PATH = '/api/user/login'
 
 	try {
-		// const { data } = await axios.post(PATH, body)
-		const response = await isValidUser(body)
-		if (!response) throw new Error('invalid credential')
-		else return {
+		const { data } = await axios.post(PATH, body)
+		return {
 			status: 'success',
-			data: body
+			data
 		}
-	} catch (error) { throw error }
+	} catch (error) {
+		// console.warn('error services', error.response)
+		if (!error?.response?.data) throw Error('Unknown error')
+		else throw Error(error.response.data.message)
+	}
 }
 
 // POST USER when page LOADS
 export const validateToken = async (token) => {
 	const PATH = '/api/user/validateToken'
-	const HEADER = { 'x-auth-token': token }
-	console.log('validate token', token)
+	const CONFIG = { headers: { 'x-auth-token': token } }
 
 	try {
-		// const { data } = await axios.post(PATH, null, HEADER)
-		const response = await isValidToken(token)
-		console.log('response', response)
-		if (!response) throw new Error('unauthorized token')
-		else return response
-	} catch (error) { throw error }
+		const { data } = await axios.post(PATH, null, CONFIG)
+		return data // user
+	} catch (error) {
+		// console.warn('error services', error.response)
+		if (!error?.response?.data) throw Error('Unknown error')
+		else throw Error(error.response.data.message)
+	}
 }

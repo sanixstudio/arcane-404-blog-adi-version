@@ -21,6 +21,7 @@ export const getOneBlogPost = async (id) => {
 // PUT BLOG in Home Page
 export const voteOneBlogPost = async (id, vote) => {
 	const PATH = `/api/blog/${ id }/vote`
+	// const PATH = `/api/blog/${ id }?vote={vote}` // up || down
 
 	try {
 		// const { data } = await axios.put(PATH)

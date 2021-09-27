@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { AuthConsumer } from '../context'
 
 // Already login: Protected routes based on current user
@@ -7,20 +7,19 @@ import { AuthConsumer } from '../context'
 
 const REDIRECT_PATH = '/'
 
-const ProtectedRoute = ({ path, element }) => {
+const ProtectedRoute = ({
+	children,
+	element: Element,
+	...rest
+}) => {
+
 	const { isAuth } = AuthConsumer()
 
-	const Component = !isAuth
-		? element
-		: (
-			<Navigate
-				to={ REDIRECT_PATH }
-				replace
-				// state={{ path }}
-			/>
-		)
+	const Component = () => !isAuth
+		? (children || <Element />)
+		: <Redirect	to={ REDIRECT_PATH } />
 
-	return <Route path={ path } element={ Component } />
+	return <Route { ...rest } render={ Component } />
 }
 
 export default ProtectedRoute

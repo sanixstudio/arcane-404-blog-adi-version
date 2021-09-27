@@ -42,7 +42,8 @@ GH-CLI : gh repo clone Arcane-404/arcane-404-blog
 
 ```env
 SKIP_PREFLIGHT_CHECK = true
-MONGO_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
+JWT_TOKEN = secret
+MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
 # e.g. mongodb+srv://the-arcane-404:the-password-404@foo123-shard-00-03-a1b2c.mongodb.net:27017/blog_app_db
 ```
 

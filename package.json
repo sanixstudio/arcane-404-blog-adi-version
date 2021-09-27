@@ -8,7 +8,7 @@
   "main": "index.js",
   "type": "module",
   "config": {
-    "port": 5005,
+    "port": 8000,
     "app": "npm start",
     "server": "npm run dev:s",
     "database": "npm run dev:db",

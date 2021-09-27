@@ -7,10 +7,9 @@ const HomePage = () => {
 	return (
 		<Main>
 			<Main.Wrapper>
-				{[ 0,0,0,0,0 ].map((val, index) => {
-					console.log(index)
-					return <PostCard key={ index } headline={ 'Molly' } />
-				})}
+				{Array(5).fill().map((val, index) => (
+					<PostCard key={ index } headline={ 'Molly' } />
+				))}
 			</Main.Wrapper>
 		</Main>
 	)

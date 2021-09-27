@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { AuthConsumer } from '../context'
 
 // After Login: Private routes based on the app service
@@ -7,20 +7,19 @@ import { AuthConsumer } from '../context'
 
 const REDIRECT_PATH = '/login'
 
-const PrivateRoute = ({ path, element }) => {
+const PrivateRoute = ({
+	children,
+	element: Element,
+	...rest
+}) => {
+
 	const { isAuth } = AuthConsumer()
 
-	const Component = isAuth
-		? element
-		: (
-			<Navigate
-				to={ REDIRECT_PATH }
-				replace
-				// state={{ path }}
-			/>
-		)
+	const Component = () => isAuth
+		? (children || <Element />)
+		: <Redirect	to={ REDIRECT_PATH } />
 
-	return <Route path={ path } element={ Component } />
+	return <Route { ...rest } render={ Component } />
 }
 
 export default PrivateRoute
