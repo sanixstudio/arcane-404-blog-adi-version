@@ -47,6 +47,7 @@ const createUserObj = (user) => {
 
 // REGISTER function
 export const register = async (req, res) => {
+	console.log(req.body)
 	try {
 		// getting username, email, password info from frontend
 		const { username, email, password } = req.body

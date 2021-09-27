@@ -1,19 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useStorage } from './'
+import { api } from '../services/api'
+
+const INITIAL_KEY = 'token'
+const AUTH_TOKEN = process.env.REACT_APP_AUTH_TOKEN || null
 
 const useAuth = () => {
-	const [ isAuth, setAuthed ] = useState(false)
-	// const [ isAdmin, setAdmin ] = useState(false)
+
+	const [ token, setToken, removeToken ] = useStorage( INITIAL_KEY, AUTH_TOKEN )
+	const [ isAuth, setAuth ] = useState( false )
+	const [ user, setUser ] = useState( null )
+
+	// initial load & login
+	useEffect(() => {
+		(async () => {
+			if (!token) return null
+			try {
+				// post - '/user/validateToken' - token
+				const data = await api.validateToken(token)
+				setUser(data)
+				setAuth(true)
+			} catch (error) {	console.error(error) }
+		})()
+	}, [ token ])
+
+	// once logged in: auth == true, token is stored, include user info
+	const login = (data) => new Promise((resolve, reject) => {
+		if (!data?.token || !data?.user) return reject()
+		setAuth(true)
+		setToken(data.token)
+		setUser(data.user)
+		resolve()
+	})
+
+	// once logged out: auth == false, token is removed, null the user
+	const logout = () => new Promise((resolve) => {
+		setAuth(false)
+		removeToken()
+		setUser(null)
+		resolve()
+	})
 
 	return {
 		isAuth,
-		login: () => new Promise((resolve) => {
-			setAuthed(true)
-			resolve()
-		}),
-		logout: () => new Promise((resolve) => {
-			setAuthed(false)
-			resolve()
-		})
+		user,
+		login,
+		logout
 	}
 }
 

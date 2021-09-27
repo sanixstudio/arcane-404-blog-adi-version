@@ -18,8 +18,8 @@ TextField.Label = function TFLabel ({ children, text, ...props }) {
 	return <Label { ...props }>{ text || children }</Label>
 }
 
-TextField.Input = function TFInput ({ ...props }) {
-	return <Input { ...props }  />
+TextField.Input = function TFInput (props) {
+	return <Input { ...props } />
 }
 
 TextField.Error = function TFError ({ children, text, ...props }) {

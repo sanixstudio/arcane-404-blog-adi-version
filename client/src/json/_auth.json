@@ -1,0 +1,31 @@
+{
+  "data": {
+    "token": "60d0fe4f5311236168a109ca",
+    "user": {
+      "email": "qwe@ewq.com",
+      "username": "cosmicBible",
+      "role": "admin",
+      "avatar": "https://avatars.dicebear.com/api/gridy/101.svg"
+    }
+  },
+  "users": [
+    {
+      "id": 111,
+      "username": "cosmicBible",
+      "email": "qwe@ewq.com",
+      "passowrd": "qwe123"
+    },
+    {
+      "id": 222,
+      "username": "anonymous",
+      "email": "qaz@zaq.com",
+      "passowrd": "qazwsx"
+    },
+    {
+      "id": 333,
+      "username": "anonymous",
+      "email": "zxc@cxz.com",
+      "passowrd": "zxcasd"
+    }
+  ]
+}

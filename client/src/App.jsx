@@ -1,30 +1,30 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { ProtectedRoute } from './routes'
-import { HeaderOption, FooterNavigation } from './containers'
+import { Route, Switch } from 'react-router-dom'
+import { PrivateRoute, ProtectedRoute } from './routes'
+import { FooterNavigation, HeaderOption } from './containers'
 import {
 	LoginPage,
 	RegisterPage,
 	HomePage,
 	PostPage,
 	TopicPage,
-	ContentPage,
-	SearchPage
+	ContentPage
 } from './pages'
 
 const App = () => {
 	return (
 		<>
 			<HeaderOption />
-			<Routes>
-				<Route path="/" element={ <HomePage /> } /> {/* Home */}
-				<Route path="/search" element={ <SearchPage /> } /> {/* Search */}
-				<Route path="/admin/post" element={ <PostPage /> } /> {/* Post */}
-				<Route path="/user/topic" element={ <TopicPage /> } /> {/* Topic */}
-				<Route path="/user/content" element={ <ContentPage /> } /> {/* Content */}
-				<ProtectedRoute path="/login" element={ <LoginPage /> } /> {/* Login */}
-				<ProtectedRoute path="/register" element={ <RegisterPage /> } /> {/* Register */}
-			</Routes>
+
+			<Switch>
+				<Route path="/" exact component={ HomePage } /> {/* Home */}
+				<Route path="/admin/post" component={ PostPage } /> {/* Post */}
+				<Route path="/user/topic" component={ TopicPage } /> {/* Topic */}
+				<Route path="/user/content" component={ ContentPage } /> {/* Content */}
+				<ProtectedRoute path="/login" element={ LoginPage } /> {/* Login */}
+				<ProtectedRoute path="/register" component={ RegisterPage } /> {/* Register */}
+			</Switch>
+
 			<FooterNavigation />
 		</>
 	)
