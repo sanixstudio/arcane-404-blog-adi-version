@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-import { User } from '../model/index.js'
+import { User, Verify } from '../model/index.js'
 
 const tokenOptions = {
 	expiresIn: '2h'
