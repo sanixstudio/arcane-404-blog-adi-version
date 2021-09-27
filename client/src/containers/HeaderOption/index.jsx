@@ -1,13 +1,15 @@
 import React from 'react'
 import { IconButton } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Header from './_Header'
 import { Logo, Account } from '../../connections'
 import { AuthConsumer } from '../../context'
 
 const HeaderOption = () => {
 
-	const navigate = useNavigate()
+	const history = useHistory()
+	const navigate = (path) => history.push(path)
+
 	const { isAuth, logout } = AuthConsumer()
 
 	const goToLogin = () => navigate('/login')

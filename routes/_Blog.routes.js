@@ -1,6 +1,6 @@
 import express from 'express'
 import { BlogControllers } from '../controllers/index.js'
-import authJWT from '../middlewares/auth.js'
+import { authJWT } from '../middlewares/index.js'
 
 const blogRouter = express.Router()
 
