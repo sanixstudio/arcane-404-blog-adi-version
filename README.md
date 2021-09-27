@@ -17,7 +17,7 @@
 
 To run this project, we need a few things
 
-- required: Node.js + MongoDB
+- required: [Node.js][node-js-link] + [MongoDB][mongo-db-link]
 
 1. clone repo
 
@@ -30,7 +30,7 @@ GH-CLI : gh repo clone Arcane-404/arcane-404-blog
 ```
 
 2. `cd ./arcane-404-blog`
-3. `git branch develop`
+3. `git switch -c develop`
 4. `npm run update`
    - check & merge any updates
    - install server-side packages
@@ -38,18 +38,347 @@ GH-CLI : gh repo clone Arcane-404/arcane-404-blog
 5. create `.env`
    - copy & paste keys
    - get your values from:
-     - [MongoDB](https://www.mongodb.com/)
+     - [MongoDB URI setup][mongo-db-setup]
 
 ```env
 SKIP_PREFLIGHT_CHECK = true
 JWT_TOKEN = secret
-MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
+MONGODB_URI = [ db-link ]
+
+# development: mongodb://localhost/[db-name]
+# production: mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
 # e.g. mongodb+srv://the-arcane-404:the-password-404@foo123-shard-00-03-a1b2c.mongodb.net:27017/blog_app_db
 ```
 
-6. if Mac, `chmod +x .husky/pre-commit`
-   - if Windows, skip
+6. if Mac, enter `chmod +x .husky/pre-commit`
+   - if Windows, skip this step
 7. start `npm run dev`
+
+## General Info
+
+### Folder Architecture
+
+<details>
+  <summary>View client structure</summary>
+
+```shell
+arcane-404-blog/client/
+├─ public/
+│  ├─ icons/
+│  │  ├─ favicon.ico
+│  ├─ index.html
+├─ src/
+│  ├─ assets/
+│  ├─ components/
+│  ├─ constants/
+│  ├─ containers/
+│  ├─ contexts/
+│  ├─ hooks/
+│  ├─ json/
+│  ├─ pages/
+│  ├─ services/
+│  ├─ theme/
+│  ├─ utils/
+│  ├─ App.jsx
+│  ├─ index.js
+├─ .env
+—
+```
+
+</details>
+
+<details>
+  <summary>View server structure</summary>
+
+```shell
+arcane-404-blog/
+├─ client/
+├─ config/
+├─ controllers/
+├─ middlewares/
+├─ models/
+├─ routes/
+index.js
+```
+
+</details>
+
+<details>
+  <summary>View general structure</summary>
+
+```shell
+arcane-404-blog/
+├─ .github/
+├─ .husky/
+├─ .env
+├─ .editorconfig
+├─ .eslintignore
+├─ .eslintrc.json
+├─ .gitignore
+├─ .lintstagedrc.json
+├─ .prettierignore
+├─ .prettierrc.json
+├─ index.js
+├─ package.json
+├─ README.md
+```
+
+</details>
+
+<br />
+
+### Workflow Strategy
+
+<details>
+  <summary>Our dev life cycle</summary>
+
+### General Workflow
+
+- #. Starting the day: pull all updates
+
+1. Work on branch off of `develop`
+2. Work on code
+3. Message the reviewer
+
+- #. Ending the day: commit/push updates
+
+### Simple Workflow Checklist
+
+- **Asana**: create or update task 'To-Do'
+- **VS Code + Git**: branch, commit message, push
+- **GitHub**: manually create Pull Request
+- **Asana**: move task 'In Review'
+- **Discord**: message reviewer
+- **VS Code + Git**: pull, branch (create || continue)
+- **Asana**: update or move task 'In Progress'
+
+### Asana Task Strategy
+
+- **1 Epic** _initiative contains a unique_ **Sprint #** _to follow any_ **Tasks** _or_ **Bugs**
+- Epic: type branch name (descriptor)
+- Task: sub-tasks of commit messages
+
+### Git Branch Strategy
+
+- work on a **support branch**, PR to the **develop branch**, but never the **main branch**
+- core branch: main \ develop \ release
+- support branch: feature \ style \ fix \ chore \ test
+
+### Discord Review Strategy
+
+- submit any PR to review in the `#🎟-code-review`
+- post `@[username] [quick-message] [pull-request-link]`
+
+### Block Component Strategy
+
+- **Components** are **Connections** to a **Container** that make a **Page**
+- building blocks of Atomic Design + Folder Structure
+</details>
+
+<details>
+  <summary>Our file naming convention</summary>
+
+```shell
+React
+- components/: _Component.style.js + index.jsx
+- connections/: _Connection.jsx + _Connection.style.js + index.jsx
+- containers/: _Container.jsx + _Container.style.js + index.jsx
+- pages/: _CurrentPage.jsx
+- services/: _User.services.js
+
+Node
+- controllers/: _User.controls.js
+- model/: _User.model.js
+- routes/: _User.route.js
+
+General
+- index.js: single source path for each folder
+- export { default as Component } from './[path]'
+```
+
+</details>
+
+<details>
+  <summary>Our code guideline</summary>
+
+### Patterns to Follow
+
+- white-space
+- single quotes
+- no semi-colon
+- parent Component fn == arrow fn
+  - deconstruct props
+- child helper fn == arrow fn
+  - if fn has one line, then make it inline
+  - else open to block scope, {}
+- callback fn
+  - if single arg, none: `fn(item ⇒ ())`
+  - else, use (): `fn((item, index) => ())`
+- open brackets, not condensed
+
+### Code Sample
+
+```jsx
+// rafce (shortcut) || rfc (default)
+import React, { useState, useEffect } from 'react'
+import { Button } from './components' // PascalCase
+
+const isEmpty, hasKey, getRandomNumber // camelCase
+const DESKTOP_SIZE = 1080 // CAP_CASE + fixed value
+const arr = [ 'a', 'b', 'c' ]
+const obj = { num1: 1, num2: 2, num3: 3 }
+
+const Component = ({ num1, num2, num3 }) => {
+
+  const [ count, setCount ] = useState('')
+
+  // const handleClick = (e) => setCount(count + 1)
+
+  const handleClick = (e) => {
+    setCount(count + 1)
+  }
+
+  useEffect(() => {
+    console.log('check state update:', count)
+  }, [ num1, num2, num3 ])
+
+  return (
+	 <div>
+  	<h2>Hooks Example: <code>{ count }</code></h2>
+		<a { ...obj } obj={{ num4: 4 }}>show me</a>
+
+		<button onClick={ handleClick }>increment</button>
+    <button onClick={ (e) => console.log('+') }>log</button>
+
+		{
+		 arr.length && arr.map((item, index) => (
+			<Button key={ uuid() }>{ item }</Button>
+		 ))
+		}
+
+		{
+		 Object.keys(obj).length && (
+		  <>
+			 <a href="#">Home Page</a>
+			 <a href="#">About Page</a>
+		  </>
+		 )
+		}
+    </div>
+  )
+}
+
+export default Component
+```
+
+</details>
+
+<details>
+  <summary>Our block setup</summary>
+</details>
+
+<br />
+
+## Core Features
+
+- Register & verify a new user account
+- Login & verify a valid user account
+- view all our blog post article at the home page
+- select one blog post to view the whole content
+- for users, upvote or downvote the blog post
+- only for admins, submit a new blog post
+
+## API & DB Design
+
+<table>
+   <!-- <tr><td></td></tr> -->
+   <!-- <a target="_blank" href=""><img alt="" src="" /></a> -->
+	 <caption><h3><b>User</b></h3></caption>
+	 <thead>
+      <tr>
+				<th>Method</th>
+				<th>Path</th>
+				<th>Description</th>
+			</tr>
+	 </thead>
+   <tbody>
+      <tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/register</code></td>
+				<td>enter new user account</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/login</code></td>
+				<td>enter existing user account</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/validateToken</code></td>
+				<td>verify if user is in a current session</td>
+      </tr>
+   </tbody>
+</table>
+
+```json
+{
+  "username": { "STRING", "default": "anonymous" },
+  "email": { "STRING", "required", "unique", "index" },
+  "password": "STRING",
+  "avatar": "STRING",
+  "role": { "STRING", "default": "USER" },
+  "createdAt": "DATE"
+}
+```
+
+<table>
+   <!-- <tr><td></td></tr> -->
+   <!-- <a target="_blank" href=""><img alt="" src="" /></a> -->
+	 <caption><h3><b>Blog</b></h3></caption>
+	 <thead>
+      <tr>
+				<th>Method</th>
+				<th>Path</th>
+				<th>Description</th>
+			</tr>
+	 </thead>
+   <tbody>
+      <tr>
+				<td><b>GET</b></td>
+				<td><code>/api/blog/all</code></td>
+				<td>view all blog post</td>
+			</tr>
+			<tr>
+				<td><b>GET</b></td>
+				<td><code>/api/blog/:id</code></td>
+				<td>view one blog post from blog ID</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/blog/create</code></td>
+				<td>create one new blog post</td>
+			</tr>
+			<tr>
+				<td><b>PUT</b></td>
+				<td><code>/api/blog/:id?vote=_</code></td>
+				<td>update up/down vote for specific blog post</td>
+			</tr>
+   </tbody>
+</table>
+
+```json
+{
+	"author": {
+		"id": { "ref": "USER" },
+		"username": "STRING"
+	},
+	"title": "STRING",
+	"body": "STRING",
+	"upvote": [{ "ref": "USER" }],
+	"downvote": [{ "ref": "USER" }],
+	"createdOn": "DATE"
+}
+```
 
 ## Tools & Technologies
 
@@ -129,6 +458,12 @@ MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[
 				</a>
         <a target="_blank" href="https://axios-http.com/">
     			<img alt="Axios" src="https://img.shields.io/badge/Axios-671DDF?style=flat-square&logo=axios&logoColor=FFF" />
+				</a>
+        <a target="_blank" href="https://www.npmjs.com/package/yup">
+    			<img alt="yup" src="https://img.shields.io/badge/yup-231F20?style=flat-square&logo=npm&logoColor=FFF" />
+				</a>
+        <a target="_blank" href="https://www.npmjs.com/package/localforage">
+    			<img alt="localforage" src="https://img.shields.io/badge/localforage-231F20?style=flat-square&logo=npm&logoColor=FFF" />
 				</a>
         <a target="_blank" href="https://www.npmjs.com/package/prop-types">
     			<img alt="Prop-Types" src="https://img.shields.io/badge/Prop--Types-231F20?style=flat-square&logo=npm&logoColor=FFF" />
@@ -353,3 +688,9 @@ MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[
 
 [badge-github]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=FFF
 [badge-linkedin]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=FFF
+
+<!--  -->
+
+[node-js-link]: https://nodejs.org/en/
+[mongo-db-link]: https://www.mongodb.com/
+[mongo-db-setup]: https://studio3t.com/knowledge-base/articles/mongodb-atlas-tutorial/
