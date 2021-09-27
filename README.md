@@ -180,14 +180,14 @@ arcane-404-blog/
 
 ```shell
 React
-- components/: _Component.style.js + index.jsx
-- connections/: _Connection.jsx + _Connection.style.js + index.jsx
-- containers/: _Container.jsx + _Container.style.js + index.jsx
+- components/: _Component.styles.js + index.jsx
+- connections/: _Connection.jsx + _Connection.styles.js + index.jsx
+- containers/: _Container.jsx + _Container.styles.js + index.jsx
 - pages/: _CurrentPage.jsx
 - services/: _User.services.js
 
 Node
-- controllers/: _User.controls.js
+- controllers/: _User.controllers.js
 - model/: _User.model.js
 - routes/: _User.route.js
 
@@ -275,6 +275,154 @@ export default Component
 
 <details>
   <summary>Our block setup</summary>
+
+### more for block setup
+
+### Important Parts
+
+- components/
+- connections/
+- containers/
+- pages/
+
+**example: Login Form**
+
+### components/
+
+```jsx
+// create Button, Label, Input, ErrorText
+
+// Button/ → _Button.styles.js
+import { chakra, Button } from '@chakra-ui/react'
+export const ButtonBox = chakra(Button, {})
+
+// Button/ → _index.jsx
+import React from 'react'
+import { ButtonBox } from './_Button.styles'
+
+export default function Button({ children, ...props }) {
+	return <ButtonBox {...props}>{children}</ButtonBox>
+}
+
+// index.js
+export { default as Button } from './Button'
+```
+
+### containers/
+
+```jsx
+// create TextField → Button + Label + Input + ErrorText
+
+// TextField/ → _TextField.styles.js
+import { chakra, FormControl } from '@chakra-ui/react'
+export const TextFieldBox = chakra(FormControl, {})
+
+// TextField/ → _TextField.jsx
+import React from 'react'
+import { TextFieldBox } from './_TextField.styles'
+import { Label, Input, ErrorText } from '../components'
+
+export default function TextField({ children, ...props }) {
+	return <TextFieldBox {...props}>{children}</TextFieldBox>
+}
+TextField.Input = function TextField(props) {
+	return <Input {...props} />
+}
+// ...
+
+// TextField/ → index.jsx
+import React, { useState } from 'react'
+import TextField from './_TextField'
+
+const TextFieldConnection = ({ type, name, label, placeholder, error }) => {
+	const [value, setValue] = useState('')
+	const onChange = (e) => setValue(e.target.value)
+
+	const inputProps = {
+		type,
+		id: name,
+		name,
+		placeholder,
+		value,
+		onChange,
+	}
+
+	return (
+		<TextField isInvalid={error}>
+			<TextField.Label htmlFor={name} text={label} />
+			<TextField.Input {...inputProps} />
+			{error && <TextField.Error text={error.mesage} />}
+		</TextField>
+	)
+}
+
+// index.js
+export { default as TextField } from './TextField'
+```
+
+## containers/
+
+```jsx
+// create LoginForm → Form + Heading, Submit
+
+// LoginForm/ → _LoginForm.styles.js
+import { chakra } from '@chakra-ui/react'
+export const FormBox = chakra('form', {})
+
+// LoginForm/ → _LoginForm.jsx
+import React from 'react'
+import { FormBox } from './_FormBox.styles'
+import { Button } from '../components'
+
+export default function LoginForm ({ children, ...props }) {
+	return <FormBox { ...props }>{ children }</FormBox>
+}
+LoginForm.Submit = ({ children, ...props }) {
+	return <Button { ...props }>{ children }</Button>
+}
+// ...
+
+// LoginForm/ → index.jsx
+import React, { useState } from 'react'
+import LoginForm from './_LoginForm'
+import { TextField } from '../connections'
+
+const LoginFormContainer = () => {
+
+	const [ values, setValues ] = useState('')
+	const onSubmit = (e) => e.preventDefault()
+
+	return (
+		<LoginForm>
+  		<LoginForm.Heading>Login</LoginForm.Heading>
+      <TextField name="email" label="email" />
+      <TextField name="password" label="Password" />
+  		<LoginForm.Submit>Submit</LoginForm.Submit>
+		</LoginForm>
+	)
+}
+
+// index.js
+export { default as LoginForm } from './LoginForm'
+```
+
+## pages/
+
+```jsx
+import React from 'react'
+import { LoginForm } from '../containers'
+
+const HomePage = () => {
+	return (
+		<>
+			<LoginForm />
+		</>
+	)
+}
+```
+
+## DONE
+
 </details>
 
 <br />
