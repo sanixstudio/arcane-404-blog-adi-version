@@ -1,7 +1,7 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { ProtectedRoute } from './routes'
-import { HeaderOption, FooterNavigation } from './containers'
+import { Route, Routes } from 'react-router-dom'
+
+import { FooterNavigation, HeaderOption } from './containers'
 import {
 	LoginPage,
 	RegisterPage,
@@ -11,6 +11,7 @@ import {
 	ContentPage
 	// SearchPage
 } from './pages'
+import { ProtectedRoute } from './routes'
 
 // import { AuthConsumer } from './context'
 // const { isAuth } = AuthConsumer()
