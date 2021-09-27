@@ -10,8 +10,6 @@ export const useStorage = (key, init = null) => {
 		setStorage(null)
 	}
 
-	console.log('LOCAL', storage)
-
 	useEffect(() => {
 		(async () => {
 			try { setStorage((await localforage.getItem(key)) || init) }

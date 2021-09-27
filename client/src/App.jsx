@@ -18,9 +18,9 @@ const App = () => {
 
 			<Switch>
 				<Route path="/" exact component={ HomePage } /> {/* Home */}
+				<Route path="/blog/content" component={ ContentPage } /> {/* Content */}
 				<Route path="/admin/post" component={ PostPage } /> {/* Post */}
 				<Route path="/user/topic" component={ TopicPage } /> {/* Topic */}
-				<Route path="/user/content" component={ ContentPage } /> {/* Content */}
 				<ProtectedRoute path="/login" element={ LoginPage } /> {/* Login */}
 				<ProtectedRoute path="/register" component={ RegisterPage } /> {/* Register */}
 			</Switch>

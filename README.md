@@ -17,7 +17,7 @@
 
 To run this project, we need a few things
 
-- required: Node.js + MongoDB
+- required: [Node.js][node-js-link] + [MongoDB][mongo-db-link]
 
 1. clone repo
 
@@ -30,7 +30,7 @@ GH-CLI : gh repo clone Arcane-404/arcane-404-blog
 ```
 
 2. `cd ./arcane-404-blog`
-3. `git branch develop`
+3. `git switch -c develop`
 4. `npm run update`
    - check & merge any updates
    - install server-side packages
@@ -38,18 +38,495 @@ GH-CLI : gh repo clone Arcane-404/arcane-404-blog
 5. create `.env`
    - copy & paste keys
    - get your values from:
-     - [MongoDB](https://www.mongodb.com/)
+     - [MongoDB URI setup][mongo-db-setup]
 
 ```env
 SKIP_PREFLIGHT_CHECK = true
 JWT_TOKEN = secret
-MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
+MONGODB_URI = [ db-link ]
+
+# development: mongodb://localhost/[db-name]
+# production: mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[port-number]/[db-name]
 # e.g. mongodb+srv://the-arcane-404:the-password-404@foo123-shard-00-03-a1b2c.mongodb.net:27017/blog_app_db
 ```
 
-6. if Mac, `chmod +x .husky/pre-commit`
-   - if Windows, skip
+6. if Mac, enter `chmod +x .husky/pre-commit`
+   - if Windows, skip this step
 7. start `npm run dev`
+
+## General Info
+
+### Folder Architecture
+
+<details>
+  <summary>View client structure</summary>
+
+```shell
+arcane-404-blog/client/
+├─ public/
+│  ├─ icons/
+│  │  ├─ favicon.ico
+│  ├─ index.html
+├─ src/
+│  ├─ assets/
+│  ├─ components/
+│  ├─ constants/
+│  ├─ containers/
+│  ├─ contexts/
+│  ├─ hooks/
+│  ├─ json/
+│  ├─ pages/
+│  ├─ services/
+│  ├─ theme/
+│  ├─ utils/
+│  ├─ App.jsx
+│  ├─ index.js
+├─ .env
+—
+```
+
+</details>
+
+<details>
+  <summary>View server structure</summary>
+
+```shell
+arcane-404-blog/
+├─ client/
+├─ config/
+├─ controllers/
+├─ middlewares/
+├─ models/
+├─ routes/
+index.js
+```
+
+</details>
+
+<details>
+  <summary>View general structure</summary>
+
+```shell
+arcane-404-blog/
+├─ .github/
+├─ .husky/
+├─ .env
+├─ .editorconfig
+├─ .eslintignore
+├─ .eslintrc.json
+├─ .gitignore
+├─ .lintstagedrc.json
+├─ .prettierignore
+├─ .prettierrc.json
+├─ index.js
+├─ package.json
+├─ README.md
+```
+
+</details>
+
+<br />
+
+### Workflow Strategy
+
+<details>
+  <summary>Our dev life cycle</summary>
+
+### General Workflow
+
+- #. Starting the day: pull all updates
+
+1. Work on branch off of `develop`
+2. Work on code
+3. Message the reviewer
+
+- #. Ending the day: commit/push updates
+
+### Simple Workflow Checklist
+
+- **Asana**: create or update task 'To-Do'
+- **VS Code + Git**: branch, commit message, push
+- **GitHub**: manually create Pull Request
+- **Asana**: move task 'In Review'
+- **Discord**: message reviewer
+- **VS Code + Git**: pull, branch (create || continue)
+- **Asana**: update or move task 'In Progress'
+
+### Asana Task Strategy
+
+- **1 Epic** _initiative contains a unique_ **Sprint #** _to follow any_ **Tasks** _or_ **Bugs**
+- Epic: type branch name (descriptor)
+- Task: sub-tasks of commit messages
+
+### Git Branch Strategy
+
+- work on a **support branch**, PR to the **develop branch**, but never the **main branch**
+- core branch: main \ develop \ release
+- support branch: feature \ style \ fix \ chore \ test
+
+### Discord Review Strategy
+
+- submit any PR to review in the `#🎟-code-review`
+- post `@[username] [quick-message] [pull-request-link]`
+
+### Block Component Strategy
+
+- **Components** are **Connections** to a **Container** that make a **Page**
+- building blocks of Atomic Design + Folder Structure
+</details>
+
+<details>
+  <summary>Our file naming convention</summary>
+
+```shell
+React
+- components/: _Component.styles.js + index.jsx
+- connections/: _Connection.jsx + _Connection.styles.js + index.jsx
+- containers/: _Container.jsx + _Container.styles.js + index.jsx
+- pages/: _CurrentPage.jsx
+- services/: _User.services.js
+
+Node
+- controllers/: _User.controllers.js
+- model/: _User.model.js
+- routes/: _User.route.js
+
+General
+- index.js: single source path for each folder
+- export { default as Component } from './[path]'
+```
+
+</details>
+
+<details>
+  <summary>Our code guideline</summary>
+
+### Patterns to Follow
+
+- white-space
+- single quotes
+- no semi-colon
+- parent Component fn == arrow fn
+  - deconstruct props
+- child helper fn == arrow fn
+  - if fn has one line, then make it inline
+  - else open to block scope, {}
+- callback fn
+  - if single arg, none: `fn(item ⇒ ())`
+  - else, use (): `fn((item, index) => ())`
+- open brackets, not condensed
+
+### Code Sample
+
+```jsx
+// rafce (shortcut) || rfc (default)
+import React, { useState, useEffect } from 'react'
+import { Button } from './components' // PascalCase
+
+const isEmpty, hasKey, getRandomNumber // camelCase
+const DESKTOP_SIZE = 1080 // CAP_CASE + fixed value
+const arr = [ 'a', 'b', 'c' ]
+const obj = { num1: 1, num2: 2, num3: 3 }
+
+const Component = ({ num1, num2, num3 }) => {
+
+  const [ count, setCount ] = useState('')
+
+  // const handleClick = (e) => setCount(count + 1)
+
+  const handleClick = (e) => {
+    setCount(count + 1)
+  }
+
+  useEffect(() => {
+    console.log('check state update:', count)
+  }, [ num1, num2, num3 ])
+
+  return (
+	 <div>
+  	<h2>Hooks Example: <code>{ count }</code></h2>
+		<a { ...obj } obj={{ num4: 4 }}>show me</a>
+
+		<button onClick={ handleClick }>increment</button>
+    <button onClick={ (e) => console.log('+') }>log</button>
+
+		{
+		 arr.length && arr.map((item, index) => (
+			<Button key={ uuid() }>{ item }</Button>
+		 ))
+		}
+
+		{
+		 Object.keys(obj).length && (
+		  <>
+			 <a href="#">Home Page</a>
+			 <a href="#">About Page</a>
+		  </>
+		 )
+		}
+    </div>
+  )
+}
+
+export default Component
+```
+
+</details>
+
+<details>
+  <summary>Our block setup</summary>
+
+### more for block setup
+
+### Important Parts
+
+- components/
+- connections/
+- containers/
+- pages/
+
+**example: Login Form**
+
+### components/
+
+```jsx
+// create Button, Label, Input, ErrorText
+
+// Button/ → _Button.styles.js
+import { chakra, Button } from '@chakra-ui/react'
+export const ButtonBox = chakra(Button, {})
+
+// Button/ → _index.jsx
+import React from 'react'
+import { ButtonBox } from './_Button.styles'
+
+export default function Button({ children, ...props }) {
+	return <ButtonBox {...props}>{children}</ButtonBox>
+}
+
+// index.js
+export { default as Button } from './Button'
+```
+
+### containers/
+
+```jsx
+// create TextField → Button + Label + Input + ErrorText
+
+// TextField/ → _TextField.styles.js
+import { chakra, FormControl } from '@chakra-ui/react'
+export const TextFieldBox = chakra(FormControl, {})
+
+// TextField/ → _TextField.jsx
+import React from 'react'
+import { TextFieldBox } from './_TextField.styles'
+import { Label, Input, ErrorText } from '../components'
+
+export default function TextField({ children, ...props }) {
+	return <TextFieldBox {...props}>{children}</TextFieldBox>
+}
+TextField.Input = function TextField(props) {
+	return <Input {...props} />
+}
+// ...
+
+// TextField/ → index.jsx
+import React, { useState } from 'react'
+import TextField from './_TextField'
+
+const TextFieldConnection = ({ type, name, label, placeholder, error }) => {
+	const [value, setValue] = useState('')
+	const onChange = (e) => setValue(e.target.value)
+
+	const inputProps = {
+		type,
+		id: name,
+		name,
+		placeholder,
+		value,
+		onChange,
+	}
+
+	return (
+		<TextField isInvalid={error}>
+			<TextField.Label htmlFor={name} text={label} />
+			<TextField.Input {...inputProps} />
+			{error && <TextField.Error text={error.mesage} />}
+		</TextField>
+	)
+}
+
+// index.js
+export { default as TextField } from './TextField'
+```
+
+## containers/
+
+```jsx
+// create LoginForm → Form + Heading, Submit
+
+// LoginForm/ → _LoginForm.styles.js
+import { chakra } from '@chakra-ui/react'
+export const FormBox = chakra('form', {})
+
+// LoginForm/ → _LoginForm.jsx
+import React from 'react'
+import { FormBox } from './_FormBox.styles'
+import { Button } from '../components'
+
+export default function LoginForm ({ children, ...props }) {
+	return <FormBox { ...props }>{ children }</FormBox>
+}
+LoginForm.Submit = ({ children, ...props }) {
+	return <Button { ...props }>{ children }</Button>
+}
+// ...
+
+// LoginForm/ → index.jsx
+import React, { useState } from 'react'
+import LoginForm from './_LoginForm'
+import { TextField } from '../connections'
+
+const LoginFormContainer = () => {
+
+	const [ values, setValues ] = useState('')
+	const onSubmit = (e) => e.preventDefault()
+
+	return (
+		<LoginForm>
+  		<LoginForm.Heading>Login</LoginForm.Heading>
+      <TextField name="email" label="email" />
+      <TextField name="password" label="Password" />
+  		<LoginForm.Submit>Submit</LoginForm.Submit>
+		</LoginForm>
+	)
+}
+
+// index.js
+export { default as LoginForm } from './LoginForm'
+```
+
+## pages/
+
+```jsx
+import React from 'react'
+import { LoginForm } from '../containers'
+
+const HomePage = () => {
+	return (
+		<>
+			<LoginForm />
+		</>
+	)
+}
+```
+
+## DONE
+
+</details>
+
+<br />
+
+## Core Features
+
+- Register & verify a new user account
+- Login & verify a valid user account
+- view all our blog post article at the home page
+- select one blog post to view the whole content
+- for users, upvote or downvote the blog post
+- only for admins, submit a new blog post
+
+## API & DB Design
+
+<table>
+   <!-- <tr><td></td></tr> -->
+   <!-- <a target="_blank" href=""><img alt="" src="" /></a> -->
+	 <caption><h3><b>User</b></h3></caption>
+	 <thead>
+      <tr>
+				<th>Method</th>
+				<th>Path</th>
+				<th>Description</th>
+			</tr>
+	 </thead>
+   <tbody>
+      <tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/register</code></td>
+				<td>enter new user account</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/login</code></td>
+				<td>enter existing user account</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/user/validateToken</code></td>
+				<td>verify if user is in a current session</td>
+      </tr>
+   </tbody>
+</table>
+
+```json
+{
+  "username": { "STRING", "default": "anonymous" },
+  "email": { "STRING", "required", "unique", "index" },
+  "password": "STRING",
+  "avatar": "STRING",
+  "role": { "STRING", "default": "USER" },
+  "createdAt": "DATE"
+}
+```
+
+<table>
+   <!-- <tr><td></td></tr> -->
+   <!-- <a target="_blank" href=""><img alt="" src="" /></a> -->
+	 <caption><h3><b>Blog</b></h3></caption>
+	 <thead>
+      <tr>
+				<th>Method</th>
+				<th>Path</th>
+				<th>Description</th>
+			</tr>
+	 </thead>
+   <tbody>
+      <tr>
+				<td><b>GET</b></td>
+				<td><code>/api/blog/all</code></td>
+				<td>view all blog post</td>
+			</tr>
+			<tr>
+				<td><b>GET</b></td>
+				<td><code>/api/blog/:id</code></td>
+				<td>view one blog post from blog ID</td>
+			</tr>
+			<tr>
+				<td><b>POST</b></td>
+				<td><code>/api/blog/create</code></td>
+				<td>create one new blog post</td>
+			</tr>
+			<tr>
+				<td><b>PUT</b></td>
+				<td><code>/api/blog/:id?vote=_</code></td>
+				<td>update up/down vote for specific blog post</td>
+			</tr>
+   </tbody>
+</table>
+
+```json
+{
+	"author": {
+		"id": { "ref": "USER" },
+		"username": "STRING"
+	},
+	"title": "STRING",
+	"body": "STRING",
+	"upvote": [{ "ref": "USER" }],
+	"downvote": [{ "ref": "USER" }],
+	"createdOn": "DATE"
+}
+```
 
 ## Tools & Technologies
 
@@ -129,6 +606,12 @@ MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[
 				</a>
         <a target="_blank" href="https://axios-http.com/">
     			<img alt="Axios" src="https://img.shields.io/badge/Axios-671DDF?style=flat-square&logo=axios&logoColor=FFF" />
+				</a>
+        <a target="_blank" href="https://www.npmjs.com/package/yup">
+    			<img alt="yup" src="https://img.shields.io/badge/yup-231F20?style=flat-square&logo=npm&logoColor=FFF" />
+				</a>
+        <a target="_blank" href="https://www.npmjs.com/package/localforage">
+    			<img alt="localforage" src="https://img.shields.io/badge/localforage-231F20?style=flat-square&logo=npm&logoColor=FFF" />
 				</a>
         <a target="_blank" href="https://www.npmjs.com/package/prop-types">
     			<img alt="Prop-Types" src="https://img.shields.io/badge/Prop--Types-231F20?style=flat-square&logo=npm&logoColor=FFF" />
@@ -353,3 +836,9 @@ MONGODB_URI = mongodb+srv://[db-user-name]:[db-password]@[server-cluster-name]:[
 
 [badge-github]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=FFF
 [badge-linkedin]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=FFF
+
+<!--  -->
+
+[node-js-link]: https://nodejs.org/en/
+[mongo-db-link]: https://www.mongodb.com/
+[mongo-db-setup]: https://studio3t.com/knowledge-base/articles/mongodb-atlas-tutorial/
