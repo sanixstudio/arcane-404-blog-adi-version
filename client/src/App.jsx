@@ -1,16 +1,11 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { ProtectedRoute } from './routes'
-import { HeaderOption, FooterNavigation } from './containers'
+import { Route, Routes } from 'react-router-dom'
+
+import { FooterNavigation, HeaderOption } from './containers'
 import {
-	LoginPage,
-	RegisterPage,
-	HomePage,
-	PostPage,
-	TopicPage,
-	ContentPage,
-	SearchPage
+	ContentPage, HomePage, LoginPage, PostPage, RegisterPage, SearchPage, TopicPage 
 } from './pages'
+import { ProtectedRoute } from './routes'
 
 const App = () => {
 	return (

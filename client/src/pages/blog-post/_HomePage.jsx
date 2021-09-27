@@ -1,10 +1,18 @@
 import React from 'react'
 
+import { Main } from '../../components'
+import { PostCard } from '../../containers'
+
 const HomePage = () => {
 	return (
-		<div>
-			<h1>Home Page (article/newsfeed)</h1>
-		</div>
+		<Main>
+			<Main.Wrapper>
+				{[ 0,0,0,0,0 ].map((val, index) => {
+					console.log(index)
+					return <PostCard key={ index } headline={ 'Molly' } />
+				})}
+			</Main.Wrapper>
+		</Main>
 	)
 }
 
