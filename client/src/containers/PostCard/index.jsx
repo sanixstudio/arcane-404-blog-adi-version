@@ -2,21 +2,18 @@ import React from 'react'
 
 import PostCard from './_PostCard'
 
-const IMG =
-  'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE'
-
-const PostCardContainer = ({ headline }) => {
+const PostCardContainer = ({ headline, tagline, topic, timestamp, image }) => {
 	return (
 		<PostCard>
 			<PostCard.Headline>{ headline }</PostCard.Headline>
 
-			<PostCard.Tagline>Tagline</PostCard.Tagline>
+			<PostCard.Tagline>{ tagline }</PostCard.Tagline>
 
-			<PostCard.Topic>Topic</PostCard.Topic>
+			<PostCard.Topic>{ topic }</PostCard.Topic>
 
-			<PostCard.Timestamp>Timestamp</PostCard.Timestamp>
+			<PostCard.Timestamp>{ timestamp }</PostCard.Timestamp>
 			
-			<PostCard.Image src={ IMG } />
+			<PostCard.Image src={ image } /> 
 		</PostCard>
 	)
 }
