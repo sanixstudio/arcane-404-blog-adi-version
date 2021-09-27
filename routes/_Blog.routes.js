@@ -9,6 +9,7 @@ blogRouter
 	.get('/all', BlogControllers.getAllBlogs)
 	.get('/:id', BlogControllers.searchBlogs)
 	.put('/:id', BlogControllers.updateBlogById)
+	.delete('/delete', BlogControllers.deleteAllBlogs)
 	.delete('/:id', BlogControllers.deleteBlogById)
 	// single route for upvote + downvote
 	.put('/:id/upvote', authJWT, BlogControllers.upvoteBlog)
