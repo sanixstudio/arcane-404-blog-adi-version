@@ -1,69 +1,70 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
-// import axios from 'axios'
-import { auth, authAttributes } from '../json'
-import { asyncTest } from '../utils/_helpers'
+import { authAttributes } from '../json'
+import { delay } from '../utils/_helpers'
+import { api } from '../services/api'
 
 const { EMAIL, PASSWORD } = authAttributes
 
+const initialMessage = {
+	status: undefined,
+	text: undefined
+}
+
 const useLogin = () => {
 
+	// hook to redirect route
 	const navigate = useNavigate()
 
-	const [ message, setMessage ] = useState({
-		status: undefined,
-		text: undefined
+	// include alert message for error or success
+	const [ message, setMessage ] = useState(initialMessage)
+
+	// Formik prop: initial state values
+	const initialValues = {
+		[EMAIL]: '',
+		[PASSWORD]: ''
+	}
+
+	// Formik prop: to check validation on values
+	const validationSchema = yup.object({
+		[EMAIL]: yup.string().required().email(),
+		[PASSWORD]: yup.string().required()
 	})
 
-	const isValidUser = (input) => auth.find(user => (
-		user.email === input.email &&
-		user.passowrd === input.password
-	))
+	// Formik prop: to check verification & handle submit
+	const onSubmit = async (values, actions) => {
+		try {
+			// const response = await axios.post('/login', values)
+			const response = await api.loginUser(values)
+			console.log(response)
 
-	const loginSchemaProps = {
-		initialValues: {
-			[EMAIL]: '',
-			[PASSWORD]: ''
-		},
+			setMessage({
+				status: 'success',
+				text: 'login success'
+			})
 
-		validationSchema: yup.object({
-			[EMAIL]: yup.string().required().email(),
-			[PASSWORD]: yup.string().required()
-		}),
-
-		onSubmit: async (values, actions) => {
-			try {
-				// const response = await axios.post('/login', values)
-				const isValid = await isValidUser(values)
-				if (!isValid) throw new Error('invalid credential')
-
-				setMessage({
-					status: undefined,
-					text: undefined
-				})
-
-				/* TEST */
-				asyncTest(1000).then(() => {
-					actions.setSubmitting(false)
-					setMessage({
-						status: 'success',
-						text: 'login success'
-					})
-					// navigate('/')
-				})
-			} catch (err) {
-				setMessage({
-					status: 'error',
-					text: err.message
-				})
-			}
+			/* TEST */
+			delay(1000).then(() => {
+				actions.setSubmitting(false)
+				setMessage(initialMessage)
+				// navigate('/')
+			})
+		} catch (error) {
+			setMessage({
+				status: 'error',
+				text: error.message
+			})
 		}
 	}
 
 	return {
 		message,
-		loginSchemaProps
+		loginSchemaProps: {
+			initialValues,
+			validationSchema,
+			onSubmit
+		}
 	}
 }
 

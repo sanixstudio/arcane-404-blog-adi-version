@@ -1,13 +1,9 @@
-/*
-delete values.passwordConfirm
-*/
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
-// import axios from 'axios'
-import { auth, authAttributes } from '../json'
-import { asyncTest } from '../utils/_helpers'
+import { authAttributes } from '../json'
+import { delay } from '../utils/_helpers'
+import { api } from '../services/api'
 
 const {
 	AVATAR,
@@ -17,64 +13,73 @@ const {
 	PASSWORD_CONFIRM
 } = authAttributes
 
+const initialMessage = {
+	status: undefined,
+	text: undefined
+}
+
 const useRegister = () => {
 
+	// hook to redirect route
 	const navigate = useNavigate()
 
-	const [ message, setMessage ] = useState({
-		status: undefined,
-		text: undefined
+	// include alert message for error or success
+	const [ message, setMessage ] = useState(initialMessage)
+
+	// Formik prop: initial state values
+	const initialValues = {
+		[AVATAR]: '',
+		[USERNAME]: '',
+		[EMAIL]: '',
+		[PASSWORD]: '',
+		[PASSWORD_CONFIRM]: ''
+	}
+
+	// Formik prop: to check validation on values
+	const validationSchema = yup.object({
+		[EMAIL]: yup.string().required().email(),
+		[PASSWORD]: yup.string().required().min(6),
+		[PASSWORD_CONFIRM]: yup.string()
+			.required(`please confirm your ${ PASSWORD }`)
+			.oneOf([ yup.ref(PASSWORD) ], `${ PASSWORD } must match`)
 	})
 
-	const isAlreadyUser = (input) => auth.find(user => (
-		user.email === input.email
-	))
+	// Formik prop: to check verification & handle submit
+	const onSubmit = async (values, actions) => {
+		const { passwordConfirm, ...body } = values
+		// console.log('body', body)
 
-	const registerSchemaProps = {
-		initialValues: {
-			[AVATAR]: '',
-			[USERNAME]: '',
-			[EMAIL]: '',
-			[PASSWORD]: '',
-			[PASSWORD_CONFIRM]: ''
-		},
+		try {
+			// const response = await axios.post('/signup', body)
+			const response = await api.registerUser(body)
+			console.log(response)
 
-		validationSchema: yup.object({
-			[EMAIL]: yup.string().required().email(),
-			[PASSWORD]: yup.string().required().min(6),
-			[PASSWORD_CONFIRM]: yup.string()
-				.required(`please confirm your ${ PASSWORD }`)
-				.oneOf([ yup.ref(PASSWORD) ], `${ PASSWORD } must match`)
-		}),
+			setMessage({
+				status: 'success',
+				text: 'register success'
+			})
 
-		onSubmit: async (values, actions) => {
-			// console.log('values',values)
-			try {
-				// const response = await axios.post('/signup', values)
-				const isUser = await isAlreadyUser(values)
-				if (isUser) throw new Error('email is already in use')
-
-				/* TEST */
-				asyncTest(1000).then(() => {
-					actions.setSubmitting(false)
-					setMessage({
-						status: 'success',
-						text: 'register success'
-					})
-					// navigate('/')
-				})
-			} catch (err) {
-				setMessage({
-					status: 'error',
-					text: err.message
-				})
-			}
+			/* TEST */
+			delay(1000).then(() => {
+				actions.setSubmitting(false)
+				setMessage(initialMessage)
+				// navigate('/')
+			})
+		} catch (error) {
+			setMessage({
+				status: 'error',
+				text: error.message
+			})
 		}
 	}
 
 	return {
 		message,
-		registerSchemaProps
+		registerSchemaProps: {
+			initialValues,
+			validationSchema,
+			onSubmit
+		}
 	}
 }
 
