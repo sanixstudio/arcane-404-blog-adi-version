@@ -83,21 +83,32 @@ export const upvoteBlog = async (req, res) => {
 		// console.log(req.params, req.auth)
 		const { id: blogId } = req.params
 		const { id, username } = req.auth
-		// Find Blog By Id
-		const upvote = await Blog.findByIdAndUpdate(
-			{ _id: blogId },
+
+		// Check if id already exists in the array
+		const exists = await Blog.find(
 			{
-				$push: {
-					upvotes: {
-						$each: [
-							{ id, username }
-						]
-					}
-				}
-			},
-			{ new: true }
+				'upvotes.id': id
+			}
 		)
-		return res.status(200).json(upvote)
+		if (exists) {
+			return res.status(403).json({ message: 'You have already upvoted once' })
+		} else {
+			// If it does not exist, add to the array =>
+			const upvote = await Blog.findByIdAndUpdate(
+				{ _id: blogId },
+				{
+					$push: {
+						upvotes: {
+							$each: [
+								{ id, username }
+							]
+						}
+					}
+				},
+				{ new: true }
+			)
+			return res.status(200).json(upvote)
+		}
 
 	} catch (err) {
 		return res.status(500).json({ error: err.message })
@@ -109,22 +120,32 @@ export const downvoteBlog = async (req, res) => {
 	try {
 		const { id: blogId } = req.params
 		const { id, username } = req.auth
-		// console.log(username)
-		const downvote = await Blog.findByIdAndUpdate(
-			{ _id: blogId },
-			{
-				$push: {
-					downvotes: {
-						$each: [
-							{ id, username }
-						]
-					}
-				}
-			},
-			{ new: true }
-		)
 
-		res.status(200).json(downvote)
+		// check if id already exists in array
+		const exist = Blog.find(
+			{
+				'upvotes.id': id
+			}
+		)
+		if (exist) {
+			return res.status(403).json({ message: 'You already downvoted!' })
+		}  else {
+			const downvote = await Blog.findByIdAndUpdate(
+				{ _id: blogId },
+				{
+					$push: {
+						downvotes: {
+							$each: [
+								{ id, username }
+							]
+						}
+					}
+				},
+				{ new: true }
+			)
+
+			res.status(200).json(downvote)
+		}
 
 	} catch (err) {
 		res.status(500).json({ error: err.message })
