@@ -5,6 +5,7 @@ const { Schema, model } = mongoose
 const VerifySchema = new Schema({
 	_user: {
 		type: Schema.Types.ObjectId,
+		ref: 'User',
 		required: true
 	},
 	token: {

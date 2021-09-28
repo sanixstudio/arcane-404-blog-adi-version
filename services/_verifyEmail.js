@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 
-const verifyURL = process.env.VERIFY_URL || 'http://localhost:3000/confirm'
+const verifyURL = process.env.VERIFY_URL || 'http://10.0.0.21:3000/confirm'
 
 const htmlTEmplate = token => (
 	`<!DOCTYPE html>
@@ -13,7 +13,7 @@ const htmlTEmplate = token => (
 				  Please click <a href="${verifyURL}/${token}" > here </a> to confirm your acoount
 				</p>
 				<footer>
-				  Arcane-404-Blog
+				  <h5> - Arcane-404-Blog </h5>
 				</footer>
 		  </body>
 	</html>`
@@ -23,6 +23,8 @@ const sendVerifyEmail = async (userEmail, token) => {
 	// create email transport
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
+		secure: false,
+		requireTLS: true,
 		auth: {
 			user: process.env.DONOT_EMAIL,
 			pass: process.env.DONOT_PASS
