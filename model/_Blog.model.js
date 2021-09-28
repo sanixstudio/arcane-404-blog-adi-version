@@ -19,16 +19,27 @@ const BlogSchema = new Schema({
 	},
 	upvotes: [
 		{
-			type: Schema.Types.ObjectId,
-			ref: 'User'
+			id: {
+				type: Schema.Types.ObjectId,
+				ref: 'User'
+			},
+			username: {
+				type: String
+			}
 		}
 	],
 	downvotes: [
 		{
-			type: Schema.Types.ObjectId,
-			ref: 'User'
+			id: {
+				type: Schema.Types.ObjectId,
+				ref: 'User'
+			},
+			username: {
+				type: String
+			}
 		}
 	],
+	// Add comments: [String?]
 	createdOn: { type: Date, default: Date.now }
 })
 
