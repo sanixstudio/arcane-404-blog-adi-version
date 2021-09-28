@@ -6,6 +6,7 @@ const {
 	register,
 	loginJWT,
 	confirmUser,
+	resendConfirm,
 	validateToken
 } = UserControllers
 
@@ -15,6 +16,7 @@ userRouter
 	.post('/register', register)
 	.post('/login', loginJWT)
 	.post('/confirm', confirmUser)
+	.post('/resendConfirm', resendConfirm)
 	.post('/validateToken', validateToken)
 
 

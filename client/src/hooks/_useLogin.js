@@ -43,6 +43,14 @@ const useLogin = () => {
 			// post - '/user/login' - values
 			const { data } = await api.loginUser(values)
 
+			if (!data.token && data.message) {
+				 setMessage({
+					status: 'error' || 'success',
+					text: data.message
+				})
+				return
+			}
+
 			setMessage({
 				status: data.status || 'success',
 				text: 'login success'

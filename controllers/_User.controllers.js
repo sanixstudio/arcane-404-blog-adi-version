@@ -33,7 +33,7 @@ const findExistingEmail = async (email) => {
 }
 
 // function for creating error message object
-const createErrorMsg = (message = 'error message') => ({ message })
+const errorMsg = (message = 'error message') => ({ message })
 
 // function for creating user object
 const createUserObj = (user) => {
@@ -59,13 +59,13 @@ export const register = async (req, res) => {
 
 		// check if email and/or password is supplied from user
 		if ( !email || !password || email.trim() === '' || password.trim() === '') {
-			return res.status(400).json(createErrorMsg('email and password are required'))
+			return res.status(400).json(errorMsg('email and password are required'))
 		}
 
 		// check if user exists or there is an error
 		const checkUser = await findExistingEmail(email)
 		if (checkUser) {
-			return res.status(checkUser.status).json(createErrorMsg(checkUser.message))
+			return res.status(checkUser.status).json(errorMsg(checkUser.message))
 		}
 
 		// encrypt user password
@@ -94,7 +94,7 @@ export const register = async (req, res) => {
 
 	} catch (err) {
 		console.log(err.message)
-		return res.status(500).json(createErrorMsg(err.message))
+		return res.status(500).json(errorMsg(err.message))
 	}
 }
 
@@ -107,7 +107,7 @@ export const loginJWT = async (req, res) => {
 
 		// check if email and/or password is supplied from user
 		if (!email || !password || email.trim() === '' || password.trim() === '') {
-			return res.status(400).json(createErrorMsg('email and password are required'))
+			return res.status(400).json(errorMsg('email and password are required'))
 		}
 
 		// find user based on email
@@ -115,11 +115,14 @@ export const loginJWT = async (req, res) => {
 
 		// if user does not exist or password is not correct
 		if (!(user && (await bcrypt.compare(password, user.password)))) {
-			return res.status(400).json(createErrorMsg('invalid credential'))
+			return res.status(400).json(errorMsg('invalid credential'))
 		}
 
 		if (!user.isVerified) {
-			return res.status(401).json(createErrorMsg('please verify your account'))
+			return res.json({
+				user: { email: user.email },
+				message: 'please verify email'
+			})
 		}
 
 		// user object
@@ -139,7 +142,7 @@ export const loginJWT = async (req, res) => {
 
 	} catch (err) {
 		console.log(err.message)
-		return res.status(500).json(createErrorMsg(err.message))
+		return res.status(500).json(errorMsg(err.message))
 	}
 }
 
@@ -149,7 +152,7 @@ export const confirmUser = async (req, res) => {
 
 	const confirmToken = req.body ? req.body.confirmId : null
 	if (!confirmToken) {
-		return res.status(401).json({ message: 'No confirm token provided, cannot verify user!' })
+		return res.status(401).json(errorMsg('No confirm token provided, cannot verify user!'))
 	}
 
 	try {
@@ -164,11 +167,11 @@ export const confirmUser = async (req, res) => {
 		})
 
 		// if cannot find user
-		if (!findUser) return res.status(401).json({ message: 'invalid token' })
+		if (!findUser) return res.status(401).json(errorMsg('invalid token'))
 
 		// if user is verified before
 		if (findUser._user.isVerified) {
-			return res.json({ data: 'account confirmed!' })
+			return res.json({ data: 'email confirmed!' })
 		}
 
 		// find the user by id and update verification status
@@ -176,12 +179,57 @@ export const confirmUser = async (req, res) => {
 		confirmedUser.isVerified = true
 		await confirmedUser.save()
 
-		return res.json({ data: 'account confirmed!' })
+		return res.json({ data: 'email confirmed!' })
 
 	} catch (err) {
 		console.log(err.message)
-		return res.status(500).json({ message: err.message })
+		return res.status(500).json(errorMsg(err.message))
 	}
+}
+
+// RESEND CONFIRMATION
+export const resendConfirm = async (req, res) => {
+	const { email } = req.body
+	// check for email
+	if (!email) {
+		return res.status(400).json(errorMsg('email is required for resending confirmation'))
+	}
+
+	try {
+
+		const findUser = await User.findOne({ email })
+
+		if (!findUser) {
+			return res.status(404).json(errorMsg('user does not exist'))
+		}
+
+		// check if user is verified
+		if (findUser.isVerified) {
+			return res.json({ data: 'email verified' })
+		}
+
+		// find and update new token
+		const tokenUpdate = { token: crypto.randomBytes(16).toString('hex') }
+
+		const confirmToken = await Verify.findOneAndUpdate({
+			 _user: findUser._id
+		},
+		tokenUpdate,
+		{
+			new: true,
+			upsert: true
+		}
+		)
+
+		// send email
+		sendVerifyEmail(findUser.email, confirmToken.token)
+
+		return res.json({ data: 'email confirmation is sent!' })
+
+	} catch (err) {
+		return res.status(500).json(errorMsg(err.message))
+	}
+
 }
 
 
@@ -190,20 +238,20 @@ export const validateToken = async (req, res) => {
 
 	// get token from header
 	const token = req.header('x-auth-token')
-	if (!token) return res.status(401).json(createErrorMsg('missing auth header'))
+	if (!token) return res.status(401).json(errorMsg('missing auth header'))
 
 	try {
 		const verified = jwt.verify(token, process.env.JWT_SECRET)
-		if (!verified) return res.status(401).json(createErrorMsg(''))
+		if (!verified) return res.status(401).json(errorMsg(''))
 
 		// find if user exists
 		const verifiedUser = await User.findById(verified.id)
-		if (!verifiedUser) return res.status(401).json(createErrorMsg('cannot find user'))
+		if (!verifiedUser) return res.status(401).json(errorMsg('cannot find user'))
 
 		return res.json(createUserObj(verifiedUser))
 
 	} catch (err) {
-		res.status(500).json(createErrorMsg(err.message))
+		res.status(500).json(errorMsg(err.message))
 	}
 
 }

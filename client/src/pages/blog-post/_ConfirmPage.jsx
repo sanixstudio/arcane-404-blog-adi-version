@@ -9,20 +9,20 @@ const ConfirmPage = (props) => {
 
 	useEffect(() => {
 		(async () => {
-			// check if confirmId is not included
-			if (!props.match || !props.match.params || !props.match.params.confirmId) {
-				history.push('/login')
-			}
-
 			try {
+				// check if confirmId is not included
+				if (!props.match.params.confirmId) {
+					history.push('/login')
+				}
 				// confirm the user
 				const confirm = await axios.post('/api/user/confirm', {
 					confirmId: props.match.params.confirmId
 				})
-				history.push('/login')
+				//history.push('/login')
 
 			} catch (error) {
-				console.log(error.message)
+				console.log(error.response?.data?.message)
+				history.push('/login')
 			}
 
 		})()
