@@ -2,13 +2,14 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { PrivateRoute, ProtectedRoute } from './routes'
 import { FooterNavigation, HeaderOption } from './containers'
-import {
-	LoginPage,
-	RegisterPage,
+import { 
 	HomePage,
-	PostPage,
+	ContentPage,
+	PostPage, 
 	TopicPage,
-	ContentPage
+	LoginPage, 
+	RegisterPage,
+	ErrorPage 
 } from './pages'
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
 				<Route path="/user/topic" component={ TopicPage } /> {/* Topic */}
 				<ProtectedRoute path="/login" element={ LoginPage } /> {/* Login */}
 				<ProtectedRoute path="/register" component={ RegisterPage } /> {/* Register */}
+				<Route path="*" component={ ErrorPage } /> {/* Error Page */}
 			</Switch>
 
 			<FooterNavigation />
