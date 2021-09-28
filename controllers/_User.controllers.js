@@ -1,7 +1,11 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
-import { User } from '../model/index.js'
+import { User, Verify } from '../model/index.js'
+
+import sendVerifyEmail from '../services/_verifyEmail.js'
+
 
 const tokenOptions = {
 	expiresIn: '2h'
@@ -40,14 +44,15 @@ const createUserObj = (user) => {
 		username: user.username,
 		email: user.email,
 		avatar: user.avatar,
-		role: user.role
+		role: user.role,
+		isVerified: user.isVerified
 	}
 }
 
 
 // REGISTER function
 export const register = async (req, res) => {
-	console.log(req.body)
+
 	try {
 		// getting username, email, password info from frontend
 		const { username, email, password } = req.body
@@ -67,27 +72,25 @@ export const register = async (req, res) => {
 		const hashedPWD = await bcrypt.hash(password, 10)
 
 		// save to db
-		const newUser = await User.create({
+		const newUser = new User({
 			username,
 			email: email.toLowerCase(),
 			password: hashedPWD
 		})
 
-		// user
-		const userObj = createUserObj(newUser)
-
-		const tokenObj = {
-			id: newUser._id,
-			user: userObj
-		}
-
-		// create token
-		const token = jwt.sign(tokenObj, process.env.JWT_SECRET, tokenOptions)
-
-		// return newUsers
-		return res.status(200).json({
-			token, user: userObj
+		const confirmToken = new Verify({
+			_user: newUser._id,
+			token: crypto.randomBytes(16).toString('hex')
 		})
+
+		// send email
+		sendVerifyEmail(newUser.email, confirmToken.token)
+
+		// saved token and user
+		await confirmToken.save()
+		await newUser.save()
+
+		return res.json({ data: 'User registered succesfully! Please check email for confirmation' })
 
 	} catch (err) {
 		console.log(err.message)
@@ -115,6 +118,10 @@ export const loginJWT = async (req, res) => {
 			return res.status(400).json(createErrorMsg('invalid credential'))
 		}
 
+		if (!user.isVerified) {
+			return res.status(401).json(createErrorMsg('please verify your account'))
+		}
+
 		// user object
 		const userObj = createUserObj(user)
 
@@ -133,6 +140,47 @@ export const loginJWT = async (req, res) => {
 	} catch (err) {
 		console.log(err.message)
 		return res.status(500).json(createErrorMsg(err.message))
+	}
+}
+
+
+// CONFIRM USER
+export const confirmUser = async (req, res) => {
+
+	const confirmToken = req.body ? req.body.confirmId : null
+	if (!confirmToken) {
+		return res.status(401).json({ message: 'No confirm token provided, cannot verify user!' })
+	}
+
+	try {
+		// find confirmation token
+		const findUser = await Verify.findOne({
+			token: confirmToken
+		},{
+			_id: 0
+		}).populate({
+			path: '_user',
+			select: 'isVerified'
+		})
+
+		// if cannot find user
+		if (!findUser) return res.status(401).json({ message: 'invalid token' })
+
+		// if user is verified before
+		if (findUser._user.isVerified) {
+			return res.json({ data: 'account confirmed!' })
+		}
+
+		// find the user by id and update verification status
+		const confirmedUser = await User.findById(findUser._user._id)
+		confirmedUser.isVerified = true
+		await confirmedUser.save()
+
+		return res.json({ data: 'account confirmed!' })
+
+	} catch (err) {
+		console.log(err.message)
+		return res.status(500).json({ message: err.message })
 	}
 }
 
