@@ -39,6 +39,7 @@ const BlogSchema = new Schema({
 			}
 		}
 	],
+	// Add comments: [String?]
 	createdOn: { type: Date, default: Date.now }
 })
 

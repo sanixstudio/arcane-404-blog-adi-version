@@ -26,6 +26,9 @@ export const postOne = async (req, res) => {
 export const getAllBlogs = async (req, res) => {
 	try {
 		// find by "key" ex: "author.username" : "herman " || "title": "New Article"
+
+		console.log(req.query)
+
 		const allBlogs = await Blog.find()
 		return res.status(200).json({ blogs: allBlogs })
 
@@ -81,6 +84,7 @@ export const deleteBlogById = async (req, res) => {
 export const upvoteBlog = async (req, res) => {
 	try {
 		const { id: blogId } = req.params
+		// Make id: userId
 		const { id, username } = req.auth
 		const exists = await Blog.find(
 			{
@@ -223,7 +227,6 @@ const checkForDownvote = async (id) => {
 		return false
 	}
 }
-
 
 // Delete all blogs
 export const deleteAllBlogs = async (req, res) => {
