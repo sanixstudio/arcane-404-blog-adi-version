@@ -4,7 +4,7 @@ import { Main } from '../../components'
 import { PostCard } from '../../containers'
 import { posts } from '../../json'
 
-//   Array(5).fill().
+//   Array(5).fill()
 const HomePage = () => {
 	return (
 		<Main>
