@@ -5,13 +5,10 @@ export const HeaderBox = chakra(Box, {
 	baseStyle: {
 		w: '100%',
 		minH: '6vh',
-		position: 'sticky',
-		top: 0
-	}
-})
-
-export const HeaderWrapper = chakra(Wrapper, {
-	baseStyle: {
+		pos: 'sticky',
+		top: 0,
 		bg: 'white'
 	}
 })
+
+export const HeaderWrapper = chakra(Wrapper, {})
