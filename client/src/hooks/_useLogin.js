@@ -13,6 +13,8 @@ const initialMessage = {
 	text: undefined
 }
 
+const delayLogin = 1000
+
 const useLogin = () => {
 
 	// hook to redirect route
@@ -20,7 +22,7 @@ const useLogin = () => {
 	const navigate = (path) => history.push(path)
 
 	// allow user to authenticate
-	const { login, loginNotVerified } = AuthConsumer()
+	const { login } = AuthConsumer()
 
 	// include alert message for error or success
 	const [ message, setMessage ] = useState(initialMessage)
@@ -44,12 +46,13 @@ const useLogin = () => {
 			const { data } = await api.loginUser(values)
 
 			if (!data.token && data.user && data.message) {
-				console.log('no verify email', data.user.email)
-				//  setMessage({
-				// 	status: 'error' || 'success',
-				// 	text: data.message
-				// })
-				loginNotVerified(data).then(() => {navigate('/resend') })
+				console.log('no verify email', data.user.email, data.message)
+				setMessage({
+					status: 'warning',
+					text: `${data.message}: click below to resend`,
+					notVerified: true,
+					email: data.user.email
+				})
 				return
 			}
 
@@ -58,7 +61,7 @@ const useLogin = () => {
 				text: 'login success'
 			})
 
-			delay(1500).then(() => {
+			delay(delayLogin).then(() => {
 				actions.setSubmitting(false)
 				setMessage(initialMessage)
 				login(data).then(() => navigate('/'))

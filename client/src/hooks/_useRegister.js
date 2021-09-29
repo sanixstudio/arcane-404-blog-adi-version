@@ -65,12 +65,14 @@ const useRegister = () => {
 			delay(1500).then(() => {
 				actions.setSubmitting(false)
 				setMessage(initialMessage)
-				login(data).then(() => navigate('/'))
+				navigate('/login')
+				//login(data).then(() => navigate('/login'))
 			})
 		} catch (error) {
+			console.log('useRegister', error)
 			setMessage({
 				status: 'error',
-				text: error.message
+				text: error.message || 'unknownerror'
 			})
 		}
 	}

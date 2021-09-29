@@ -10,7 +10,6 @@ const useAuth = () => {
 	const [ token, setToken, removeToken ] = useStorage( INITIAL_KEY, AUTH_TOKEN )
 	const [ isAuth, setAuth ] = useState( false )
 	const [ user, setUser ] = useState( null )
-	const [ email, setEmail ] = useState( null )
 
 	// initial load & login
 	useEffect(() => {
@@ -34,17 +33,6 @@ const useAuth = () => {
 		resolve()
 	})
 
-	const loginNotVerified = (data) => new Promise((resolve, reject) => {
-		if (!data) return reject()
-		setEmail(data.user.email)
-		resolve()
-	})
-
-	const resetEmail = () => new Promise((resolve) => {
-		setEmail(null)
-		resolve()
-	})
-
 	// once logged out: auth == false, token is removed, null the user
 	const logout = () => new Promise((resolve) => {
 		setAuth(false)
@@ -56,10 +44,7 @@ const useAuth = () => {
 	return {
 		isAuth,
 		user,
-		email,
 		login,
-		loginNotVerified,
-		resetEmail,
 		logout
 	}
 }

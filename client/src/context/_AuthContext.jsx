@@ -1,5 +1,5 @@
 import  React, {
-	createContext, useContext, useEffect, useMemo
+	createContext, useContext, useMemo
 } from 'react'
 import { useAuth } from '../hooks'
 
@@ -14,10 +14,10 @@ const AuthConsumer = () => useContext(AuthContext)
 
 export const AuthProvider = ({ children }) => {
 	// const value = useAuth()
-	const { isAuth, user, email, login, loginNotVerified, resetEmail, logout } = useAuth()
+	const { isAuth, user, email, login, logout } = useAuth()
 	const value = useMemo(() => (
-		{ isAuth, user, email, login, loginNotVerified, resetEmail, logout }
-	), [ isAuth, user, email, login, loginNotVerified, resetEmail, logout ])
+		{ isAuth, user, email, login, logout }
+	), [ isAuth, user, email, login, logout ])
 
 	return (
 		<AuthContext.Provider value={ value }>
