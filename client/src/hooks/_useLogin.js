@@ -13,6 +13,8 @@ const initialMessage = {
 	text: undefined
 }
 
+const delayLogin = 1000
+
 const useLogin = () => {
 
 	// hook to redirect route
@@ -43,12 +45,23 @@ const useLogin = () => {
 			// post - '/user/login' - values
 			const { data } = await api.loginUser(values)
 
+			if (!data.token && data.user && data.message) {
+				console.log('no verify email', data.user.email, data.message)
+				setMessage({
+					status: 'warning',
+					text: `${data.message}: click below to resend`,
+					notVerified: true,
+					email: data.user.email
+				})
+				return
+			}
+
 			setMessage({
 				status: data.status || 'success',
 				text: 'login success'
 			})
 
-			delay(1500).then(() => {
+			delay(delayLogin).then(() => {
 				actions.setSubmitting(false)
 				setMessage(initialMessage)
 				login(data).then(() => navigate('/'))

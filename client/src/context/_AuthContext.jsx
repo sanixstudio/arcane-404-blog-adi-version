@@ -13,11 +13,11 @@ const AuthConsumer = () => useContext(AuthContext)
 // }
 
 export const AuthProvider = ({ children }) => {
-	// const auth = useAuth()
-	const { isAuth, user, login, logout	} = useAuth()
+	// const value = useAuth()
+	const { isAuth, user, email, login, logout } = useAuth()
 	const value = useMemo(() => (
-		{ isAuth, user, login, logout }
-	), [ isAuth, user, login, logout ])
+		{ isAuth, user, email, login, logout }
+	), [ isAuth, user, email, login, logout ])
 
 	return (
 		<AuthContext.Provider value={ value }>
