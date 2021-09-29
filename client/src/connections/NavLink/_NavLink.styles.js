@@ -4,6 +4,7 @@ import {
 	Text
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+// import { Icon } from '../../components'
 
 export const NavLinkBox = chakra(Link, {
 	baseStyle: {
