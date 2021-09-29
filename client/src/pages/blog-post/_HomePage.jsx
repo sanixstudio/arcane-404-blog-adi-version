@@ -11,7 +11,7 @@ const HomePage = () => {
 		<Main>
 			<Main.Wrapper>
 				{Array(5).fill().map((val, index) => (
-					<PostCard 
+					<PostCard
 						key={ index } 
 						headline={ 'Molly' } 
 						tagline={ 'movie' } 
