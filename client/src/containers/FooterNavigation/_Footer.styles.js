@@ -22,10 +22,10 @@ export const FooterMenu = chakra(Flex, {
 	baseStyle: {
 		border: '1px solid silver',
 		w: '100%',
+		p: 1,
 		flexFlow: 'row',
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		p: 1
+		justifyContent: 'space-around'
 	}
 })
 

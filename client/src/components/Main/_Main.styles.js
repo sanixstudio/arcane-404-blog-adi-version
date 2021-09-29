@@ -5,10 +5,10 @@ export const MainBox = chakra(Box, {})
 
 export const MainWrapper = chakra(Wrapper, {
 	baseStyle: {
-		// border: '2px solid red',
 		display: 'flex',
-		justifyContent: 'center',
+		flexFlow: 'column',
 		alignItems: 'baseline',
+		justifyContent: 'center',
 		w: '100%'
 	}
 })

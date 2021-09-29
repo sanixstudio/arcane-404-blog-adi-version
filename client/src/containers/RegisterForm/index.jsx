@@ -1,6 +1,7 @@
 import React from 'react'
-import Register from './_RegisterForm'
-import { Alert, TextField } from '../../connections'
+// import Register from './_RegisterForm'
+import { Form } from '../../components'
+import { Alert, FormControls } from '../../connections'
 import { useRegister } from '../../hooks'
 import { authAttributes } from '../../json'
 
@@ -15,28 +16,28 @@ const RegisterForm = () => {
 	const { message, registerSchemaProps } = useRegister()
 
 	return (
-		<Register { ...registerSchemaProps }>
+		<Form { ...registerSchemaProps }>
 			{ (props) => (
-				<Register.Form>
-					<Register.Heading>Create Account</Register.Heading>
+				<Form.Form>
+					<Form.Heading>Create Account</Form.Heading>
 
-					<TextField name={ EMAIL } label="Email" />
+					<FormControls.TextField name={ EMAIL } label="Email" />
 
-					<TextField name={ PASSWORD } label="Password" />
+					<FormControls.TextField name={ PASSWORD } label="Password" />
 
-					<TextField name={ PASSWORD_CONFIRM } label="Confirm Password" />
+					<FormControls.TextField name={ PASSWORD_CONFIRM } label="Confirm Password" />
 
 					<Alert status={ message.status } text={ message.text } />
 
-					<Register.Submit text="Register" isLoading={ props.isSubmitting } />
+					<Form.Submit text="Register" isLoading={ props.isSubmitting } />
 
-					<Register.Text>
+					<Form.Text>
 						already have an account?{' '}
-						<Register.Path to="/login">login</Register.Path>
-					</Register.Text>
-				</Register.Form>
+						<Form.Path to="/login">login</Form.Path>
+					</Form.Text>
+				</Form.Form>
 			)}
-		</Register>
+		</Form>
 	)
 }
 
