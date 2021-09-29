@@ -11,8 +11,9 @@ import { Button } from '..'
 
 export const FormBox = chakra(Form, {
 	baseStyle: {
-		m: 2,
 		border: '1px',
+		m: 2,
+		p: 5,
 		rounded: 'md',
 		flex: '1 1 auto'
 	}
@@ -39,4 +40,10 @@ export const FormText = chakra(Text, {
 	}
 })
 
-export const FormPath = chakra(Link, {})
+export const FormPath = chakra(Link, {
+	baseStyle: {
+		color: 'teal.300',
+	  _hover: { color: 'teal.400' },
+	  _active: { color: 'teal.600' }
+	}
+})

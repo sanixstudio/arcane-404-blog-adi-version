@@ -31,3 +31,4 @@ Footer.Search = function FSearch (props) {
 Footer.Post = function FPost (props) {
 	return <FooterPost { ...props } />
 }
+

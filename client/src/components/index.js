@@ -1,4 +1,5 @@
 export * as Icon from './Icon'
+export { default as Frame } from './Frame'
 export { default as Wrapper } from './Wrapper'
 export { default as Main } from './Main'
 export { default as Button } from './Button'
