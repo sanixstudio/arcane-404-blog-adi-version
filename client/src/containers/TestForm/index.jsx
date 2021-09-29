@@ -1,12 +1,12 @@
 import React from 'react'
-import { useLogin } from '../../hooks'
+import { usePost } from '../../hooks'
 import { Form } from '../../components'
 import { Alert, FormControls } from '../../connections'
-const { TextField } = FormControls
+const { TextField, TextAreaField } = FormControls
 
 function TestForm () {
 
-	const { message, loginSchemaProps } = useLogin()
+	const { message, loginSchemaProps } = usePost()
 
 	return (
 		<Form { ...loginSchemaProps }>
@@ -14,9 +14,11 @@ function TestForm () {
 				<Form.Form>
 					<Form.Heading>The From is Real</Form.Heading>
 
-					<TextField name="email" label="Email" placeholder="Enter email here" />
+					<TextField name="title" label="Title" placeholder="Enter title here" />
 
-					<Alert status={ message.status } text={ message.text } />
+					<TextAreaField name="description" label="Description" placeholder="Enter your post description" />
+
+					{/*<Alert status={ message.status } text={ message.text } />*/}
 
 					<Form.Submit>Submit</Form.Submit>
 				</Form.Form>

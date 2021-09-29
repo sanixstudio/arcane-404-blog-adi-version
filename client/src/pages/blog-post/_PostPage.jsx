@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { PostForm } from '../../containers'
+import { TestForm } from '../../containers'
 
 const PostPage = () => {
 	return (
 		<div>
-			<PostForm />
+			<TestForm />
 		</div>
 	)
 }
