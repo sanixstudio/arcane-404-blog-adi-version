@@ -20,7 +20,7 @@ const useLogin = () => {
 	const navigate = (path) => history.push(path)
 
 	// allow user to authenticate
-	const { login } = AuthConsumer()
+	const { login, loginNotVerified } = AuthConsumer()
 
 	// include alert message for error or success
 	const [ message, setMessage ] = useState(initialMessage)
@@ -43,11 +43,13 @@ const useLogin = () => {
 			// post - '/user/login' - values
 			const { data } = await api.loginUser(values)
 
-			if (!data.token && data.message) {
-				 setMessage({
-					status: 'error' || 'success',
-					text: data.message
-				})
+			if (!data.token && data.user && data.message) {
+				console.log('no verify email', data.user.email)
+				//  setMessage({
+				// 	status: 'error' || 'success',
+				// 	text: data.message
+				// })
+				loginNotVerified(data).then(() => {navigate('/resend') })
 				return
 			}
 
