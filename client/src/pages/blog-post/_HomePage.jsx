@@ -2,22 +2,22 @@ import React from 'react'
 
 import { Main } from '../../components'
 import { PostCard } from '../../containers'
+import { posts } from '../../json'
 
-const IMG =
-  'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE'
-
+//   Array(5).fill().
 const HomePage = () => {
 	return (
 		<Main>
 			<Main.Wrapper>
-				{Array(5).fill().map((val, index) => (
+				
+				{posts.data.map((val) => (
 					<PostCard 
-						key={ index } 
-						headline={ 'Molly' } 
-						tagline={ 'movie' } 
-						topic={ 'In 4KHD!' } 
-						timestamp={ 'Oct 1, 2021 PST 10:30PM' }
-						image={ IMG }
+						key={ val.id } 
+						headline={ val.title } 
+						tagline={ val.tags } 
+						topic={ val.text } 
+						timestamp={ val.publishDate }
+						image={ val.image }
 					/>
 				))}
 			</Main.Wrapper>

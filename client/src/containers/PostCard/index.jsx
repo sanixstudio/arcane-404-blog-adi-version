@@ -1,10 +1,18 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import PostCard from './_PostCard'
 
 const PostCardContainer = ({ headline, tagline, topic, timestamp, image }) => {
+	const history = useHistory()
+	const navigate = (path) => history.push(path)
+
+	const onClick = () => {
+		navigate('/blog/content')
+	}
+
 	return (
-		<PostCard>
+		<PostCard onClick={ onClick }>
 			<PostCard.Headline>{ headline }</PostCard.Headline>
 
 			<PostCard.Tagline>{ tagline }</PostCard.Tagline>
