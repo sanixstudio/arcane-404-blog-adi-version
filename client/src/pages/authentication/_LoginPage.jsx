@@ -1,12 +1,14 @@
 import React from 'react'
 import { Main } from '../../components'
-import { LoginForm } from '../../containers'
+// import { LoginForm } from '../../containers'
+import { TestForm } from '../../containers'
 
 const LoginPage = () => {
 	return (
 		<Main>
 			<Main.Wrapper>
-				<LoginForm />
+				{/* <LoginForm /> */}
+				<TestForm />
 			</Main.Wrapper>
 		</Main>
 	)
