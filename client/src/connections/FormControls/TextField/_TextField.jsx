@@ -1,13 +1,15 @@
 import React from 'react'
-import { TextFieldBox, FieldControl } from './_TextField.styles'
+import { Field } from 'formik'
+import { FieldControl } from './_TextField.styles'
 import {
 	Label,
 	Input,
 	ErrorText
-} from '../../components'
+} from '../../../components'
+
 
 export default function TextField ({ children, ...props }) {
-	return <TextFieldBox { ...props }>{ children }</TextFieldBox>
+	return <Field { ...props }>{ children }</Field>
 }
 
 TextField.Control = function TFControl ({ children, ...props }) {

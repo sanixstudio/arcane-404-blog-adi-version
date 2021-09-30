@@ -11,10 +11,17 @@ const authJWT = async (request, response, next) => {
 		if (!verifiedToken.user) {
 			return response.status(401).json({ message: 'Invalid token format!' })
 		}
+
+		if (!verifiedToken.user.isVerified) {
+			return response.status(401).json({ message: 'Please verify your account!' })
+		}
 		// set req.auth
-		request.auth = { ...request.auth,
+		request.auth = {
+			...request.auth,
 			id: verifiedToken.id,
-			username: verifiedToken.user.username }
+			username: verifiedToken.user.username
+		}
+
 		next()
 
 	} catch (error) {

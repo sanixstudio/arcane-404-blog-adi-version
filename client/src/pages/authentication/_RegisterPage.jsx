@@ -1,15 +1,14 @@
 import React from 'react'
-
-import { Main } from '../../components'
+import { Frame } from '../../components'
 import { RegisterForm } from '../../containers'
 
 const RegisterPage = () => {
 	return (
-		<Main>
-			<Main.Wrapper>
+		<Frame.Main>
+			<Frame.Wrapper>
 				<RegisterForm />
-			</Main.Wrapper>
-		</Main>
+			</Frame.Wrapper>
+		</Frame.Main>
 	)
 }
 

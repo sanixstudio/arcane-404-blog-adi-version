@@ -1,14 +1,14 @@
 import React from 'react'
-import { Main } from '../../components'
+import { Frame } from '../../components'
 import { LoginForm } from '../../containers'
 
 const LoginPage = () => {
 	return (
-		<Main>
-			<Main.Wrapper>
+		<Frame.Main>
+			<Frame.Wrapper>
 				<LoginForm />
-			</Main.Wrapper>
-		</Main>
+			</Frame.Wrapper>
+		</Frame.Main>
 	)
 }
 

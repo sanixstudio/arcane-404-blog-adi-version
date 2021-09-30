@@ -1,35 +1,65 @@
-import React from 'react'
-import Login from './_LoginForm'
-import { Alert, TextField } from '../../connections'
+import React, { useState } from 'react'
+// import Login from './_LoginForm'
+import { Form } from '../../components'
+import { Alert, FormControls } from '../../connections'
 import { useLogin } from '../../hooks'
 import { authAttributes } from '../../json'
+import { api } from '../../services/api'
 const { EMAIL, PASSWORD } = authAttributes
 
 const LoginForm = () => {
 
 	const { message, loginSchemaProps } = useLogin()
 
+	const [ resent, setResent ] = useState(false)
+
+	const handleResent = async () => {
+		if (!message?.email) return
+		try {
+			// post - '/user/login' - email
+			const response = await api.resendVerification(message.email)
+			console.log('resend', response, resent)
+			setResent(true)
+		} catch (error) {	console.error('sent', error) }
+	}
+
 	return (
-		<Login { ...loginSchemaProps }>
+		<Form { ...loginSchemaProps }>
 			{ (props) => (
-				<Login.Form>
-					<Login.Heading>Welcome Back</Login.Heading>
+				<Form.Form>
+					<Form.Heading>Welcome Back</Form.Heading>
 
-					<TextField name={ EMAIL } label="Email" />
+					<FormControls.TextField name={ EMAIL } label="Email" />
 
-					<TextField name={ PASSWORD } label="Password" />
+					<FormControls.TextField name={ PASSWORD } label="Password" />
 
 					<Alert status={ message.status } text={ message.text } />
 
-					<Login.Submit text="Login" isLoading={ props.isSubmitting } />
+					<Form.Submit text="Login" isLoading={ props.isSubmitting } />
 
-					<Login.Text>
+					{ // display resend button
+						(message?.notVerified && !resent) && (
+							<p>
+								Click here to{' '}
+								<span onClick={ handleResent } role="button">
+									resend email verification
+								</span>
+							</p>
+						)
+					}
+
+					{ // display resent successful
+						(message?.notVerified && resent) &&
+						 <Alert status="success" text="email verification has been resent" />
+					}
+
+					<Form.Text>
 						don't have an account?{' '}
-						<Login.Path to="/register">sign up</Login.Path>
-					</Login.Text>
-				</Login.Form>
+						<Form.Path to="/register">sign up</Form.Path>
+					</Form.Text>
+				</Form.Form>
 			)}
-		</Login>
+		</Form>
 	)
 }
 

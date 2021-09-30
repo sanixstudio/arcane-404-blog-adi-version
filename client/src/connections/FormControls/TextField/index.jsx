@@ -3,17 +3,17 @@ import TextField from './_TextField'
 
 /* eslint-disable */
 const TextFieldConnection = ({
-	type = 'text',
 	name = 'text',
 	label = 'Text',
 	placeholder = ''
 }) => {
 
-	const inputOptions = {
+	const inputProps = {
 		autoComplete: 'off',
 		autoCorrect: 'off',
 		autoCapitalize: 'off',
 		spellCheck: 'false',
+    placeholder
 		// autoFocus: { true }
 	}
 
@@ -22,23 +22,8 @@ const TextFieldConnection = ({
 			{({ field, meta }) => (
 				<TextField.Control isInvalid={ meta.touched && meta.error }>
 					<TextField.Label htmlFor={ name } text={ label } />
-
-					<TextField.Input
-						type={ type }
-						id={ name }
-						name={ name }
-						placeholder={ placeholder }
-						{ ...inputOptions }
-						// { ...field }
-						value={ field.value }
-						onChange={ field.onChange }
-						onBlur={ field.onBlur }
-					/>
-
-					{
-						meta.touched && meta.error &&
-						<TextField.Error text={ meta.error } />
-					}
+					<TextField.Input id={ name } { ...inputProps } { ...field } />
+					{	meta.touched && meta.error && <TextField.Error text={ meta.error } /> }
 				</TextField.Control>
 			)}
 		</TextField>

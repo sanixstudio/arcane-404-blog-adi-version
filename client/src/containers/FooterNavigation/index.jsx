@@ -1,21 +1,18 @@
 import React from 'react'
 import Footer from './_Footer'
+import { Frame } from '../../components'
+import { NavLink } from '../../connections'
 
 const FooterNavigation = () => {
 	return (
-		<Footer>
-			<Footer.Wrapper>
+		<Frame.Footer>
+			<Frame.Wrapper>
 				<Footer.Menu>
-					<Footer.Path to="/">
-						<Footer.Center> <Footer.Home /> </Footer.Center>
-					</Footer.Path>
-
-					<Footer.Path to="/admin/post">
-						<Footer.Center>	<Footer.Post /> </Footer.Center>
-					</Footer.Path>
+					<NavLink to="/"> <Footer.Home /> </NavLink>
+					<NavLink to="/admin/post"> <Footer.Post /> </NavLink>
 				</Footer.Menu>
-			</Footer.Wrapper>
-		</Footer>
+			</Frame.Wrapper>
+		</Frame.Footer>
 	)
 }
 

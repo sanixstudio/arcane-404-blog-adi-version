@@ -3,8 +3,6 @@ import {
 	FooterBox,
 	FooterWrapper,
 	FooterMenu,
-	FooterCenter,
-	FooterPath,
 	FooterHome,
 	FooterSearch,
 	FooterPost
@@ -22,14 +20,6 @@ Footer.Menu = function FMenu ({ children, ...props }) {
 	return <FooterMenu { ...props }>{ children }</FooterMenu>
 }
 
-Footer.Center = function FCenter ({ children, ...props }) {
-	return <FooterCenter { ...props }>{ children }</FooterCenter>
-}
-
-Footer.Path = function FPath ({ children, ...props }) {
-	return <FooterPath { ...props }>{ children }</FooterPath>
-}
-
 Footer.Home = function FHome (props) {
 	return <FooterHome { ...props } />
 }
@@ -41,3 +31,4 @@ Footer.Search = function FSearch (props) {
 Footer.Post = function FPost (props) {
 	return <FooterPost { ...props } />
 }
+

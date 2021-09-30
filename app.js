@@ -4,7 +4,8 @@ import cors from 'cors'
 import path from 'path'
 
 import { blogRoutes, userRoutes } from './routes/index.js'
-// import { authJWT, authJWTAdmin } from './middlewares/index.js'
+//import { authJWT, authJWTAdmin } from './middlewares/index.js'
+
 
 const app = express()
 
