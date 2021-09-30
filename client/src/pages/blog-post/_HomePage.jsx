@@ -8,8 +8,7 @@ import { posts } from '../../json'
 const HomePage = () => {
 	return (
 		<Main>
-			<Main.Wrapper>
-				
+			<Main.Wrapper>		
 				{posts.data.map((val) => (
 					<PostCard 
 						key={ val.id } 
