@@ -26,7 +26,7 @@ const usePost = () => {
 		tagline: '',
 		description: '',
 		category: '',
-		tags: 'General'
+		tags: ''
 	}
 
 	const noSpaceAllowed = /^\S*$/
@@ -45,10 +45,11 @@ const usePost = () => {
 	// Form Submission
 	const onSubmit = async (values, actions) => {
 		values.imgUrl = values.imgUrl.trim()
-		values.title = values.imgUrl.trim()
-		values.tagline = values.imgUrl.trim()
-		values.description = values.imgUrl.trim()
-		values.category = values.imgUrl.trim()
+		values.title = values.title.trim()
+		values.tagline = values.tagline.trim()
+		values.description = values.description.trim()
+		values.category = values.category.trim()
+		values.tags = values.tags.trim()
 		console.log(values)
 		setMessage({
 			status: 'success',
