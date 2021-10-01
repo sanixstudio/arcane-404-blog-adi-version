@@ -22,7 +22,7 @@ export const postOne = async (req, res) => {
 
 	} catch (err) {
 		console.log(err.message)
-		return res.status(500).json({ error: err.message })
+		return res.status(500).json({ error: 'Blog Validation Failed' })
 	}
 }
 
@@ -57,11 +57,15 @@ export const searchBlogs = async (req, res) => {
 export const updateBlogById = async (req, res) => {
 	try {
 		const id = req.params.id
+		const { title, description, tags, categories, imageUrl } = req.body
 		const updatedBlog = await Blog.findByIdAndUpdate(
 			{ _id: id },
 			{
-				title: req.body.title,
-				body: req.body.description
+				title,
+				description,
+				tags,
+				categories,
+				imageUrl
 			},
 			{ new: true }
 		)
