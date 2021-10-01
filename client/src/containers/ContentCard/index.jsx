@@ -1,8 +1,10 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 import ContentCard from './_ContentCard'
 
 const ContentCardContainer = ({ content, setContent }) => {
+	if (!content) return <Redirect to="/" />
 	return (
 		<ContentCard>
 			<ContentCard.Headline>{ content.headline }</ContentCard.Headline>
