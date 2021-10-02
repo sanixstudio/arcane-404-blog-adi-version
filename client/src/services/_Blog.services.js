@@ -1,4 +1,4 @@
-// import axios from 'axios'
+import axios from 'axios'
 
 // GET BLOG for Home Page
 export const getAllBlogPost = async () => {
@@ -31,8 +31,11 @@ export const voteOneBlogPost = async (id, vote) => {
 // POST BLOG in Post Page
 export const createNewBlogPost = async (body) => {
 	const PATH = '/api/blog/create'
+	const newPath = 'https://arcane404.prestoapi.com/api/posts'
 
 	try {
-		// const { data } = await axios.post(PATH, body)
+		const { data } = await axios.post(newPath, body)
+		data.status = 'success'
+		return { data }
 	} catch (error) { throw error }
 }

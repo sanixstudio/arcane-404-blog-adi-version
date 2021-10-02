@@ -4,6 +4,7 @@ import { DownVote, UpVote } from '../../connections'
 import PostCard from './_PostCard'
 
 const PostCardContainer = ({ post }) => {
+
 	return (
 		<PostCard>
 
