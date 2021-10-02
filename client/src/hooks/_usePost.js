@@ -51,15 +51,22 @@ const usePost = () => {
 		values.category = values.category.trim()
 		values.tags = values.tags.trim()
 		values.tags = values.tags.split(',')
+		values.upVotes = 0
+		values.downVotes = 0
 		values.dataPosted = Date.now()
 		console.log(values)
 
 		try {
 			await api.createNewBlogPost(values)
 			actions.setSubmitting(false)
-			actions.resetForm()
-		} catch (error) { console.log(error) }
-
+			setMessage(initialMessage)
+			navigate('/')
+		} catch (error) {
+			setMessage({
+				status: 'error',
+				text: error.message
+			})
+		}
 	}
 
 	return {
