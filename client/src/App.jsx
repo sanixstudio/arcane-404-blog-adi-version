@@ -21,7 +21,7 @@ const App = () => {
 
 			<Switch>
 				<Route path="/" exact component={ HomePage } /> {/* Home */}
-				<Route path="/blog/content" component={ ContentPage } /> {/* Content */}
+				<Route path="/blog/:postId" component={ ContentPage } /> {/* Content */}
 				<Route path="/admin/post" component={ PostPage } /> {/* Post */}
 				<Route path="/user/topic" component={ TopicPage } /> {/* Topic */}
 				<ProtectedRoute path="/confirm/:confirmId" component={ ConfirmPage } /> {/* Confirm */}

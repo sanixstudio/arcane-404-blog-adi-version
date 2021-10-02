@@ -1,32 +1,32 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 
 import { DownVote, UpVote } from '../../connections'
 import PostCard from './_PostCard'
 
-const PostCardContainer = ({ headline, tagline, topic, timestamp, image }) => {
-	const history = useHistory()
-	const navigate = (path) => history.push(path)
-
-	const onClick = () => {
-		navigate('/blog/content')
-	}
-
+const PostCardContainer = ({ post }) => {
 	return (
-		<PostCard onClick={ onClick }>
-			<PostCard.Headline>{ headline }</PostCard.Headline>
+		<PostCard>
 
-			<PostCard.Tagline>{ tagline }</PostCard.Tagline>
+			<PostCard.Link href={ `/blog/${post._id}` }>
+				{<PostCard.Image src={ post.imgUrl } /> }
 
-			<PostCard.Topic>{ topic }</PostCard.Topic>
+				<PostCard.Headline>{ post.title }</PostCard.Headline>
+			</PostCard.Link>
 
-			<PostCard.Timestamp>{ timestamp }</PostCard.Timestamp>
-			
-			<PostCard.Image src={ image } /> 
-			<UpVote />
-			<DownVote />
+			<PostCard.Topic>{ post.category }</PostCard.Topic>
+
+			{
+				post.tags.map(tag => <PostCard.Tags key={ tag }> { tag } </PostCard.Tags> )
+			}
+
+			{/* <PostCard.Headline> { post.rating.downVotes || 0 } </PostCard.Headline> */}
+
+			<PostCard.Tagline> { post.tagline } </PostCard.Tagline>
+
+			{/* <PostCard.Timestamp>{ timestamp }</PostCard.Timestamp> */}
+
 		</PostCard>
-		
+
 	)
 }
 

@@ -11,6 +11,6 @@ export const WrapperBox = chakra(Box, {
 		h: '100%',
 		mx: 'auto',
 		px: '8',
-		border: '2px'
+		border: '1px solid #ddd'
 	}
 })

@@ -1,27 +1,33 @@
-import React from 'react'
-
-import { Main } from '../../components'
+import React, { useContext } from 'react'
+import { Main, Wrapper } from '../../components'
 import { PostCard } from '../../containers'
-import { posts } from '../../json'
+import Loader from 'react-loader-spinner'
 
-//   Array(5).fill().
+import { PostContext } from '../../context/_PostContext'
+
 const HomePage = () => {
+	const { data, isLoading, isError, error } = useContext(PostContext)
+	console.log(data)
+
+	if (isLoading)
+		return (
+			<Wrapper>
+				<Loader type="ThreeDots" color="#aaa" width="100"></Loader>
+			</Wrapper>
+		)
+
+	if (isError) return <Wrapper>{ 'Error...' }</Wrapper>
+
 	return (
 		<Main>
-			<Main.Wrapper>		
-				{posts.data.map((val) => (
-					<PostCard 
-						key={ val.id } 
-						headline={ val.title } 
-						tagline={ val.tags } 
-						topic={ val.text } 
-						timestamp={ val.publishDate }
-						image={ val.image }
-					/>
-				))}
+			<Main.Wrapper>
+				{
+					data.map((post) => <PostCard key={ post._id } post={ post } />)
+				}
 			</Main.Wrapper>
 		</Main>
 	)
+
 }
 
 export default HomePage

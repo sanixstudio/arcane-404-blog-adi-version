@@ -4,11 +4,13 @@ import {
 	PostCardHeadline,
 	PostCardImage,
 	PostCardTag,
+	TagsContainer,
 	PostCardTimestamp,
 	PostCardTopic,
+	PostCardDescription,
 	PostCardTagline,
 	PostCardLink
-} from './_PostCard.styles'
+} from './_SinglePost.styles'
 
 export default function PostCard ({ children, ...props }) {
 	return <PostCardBox { ...props }>{ children }</PostCardBox>
@@ -16,6 +18,10 @@ export default function PostCard ({ children, ...props }) {
 
 PostCard.Headline = function PCHeadline ({ children, ...props }) {
 	return <PostCardHeadline { ...props }>{ children }</PostCardHeadline>
+}
+
+PostCard.TagsContainer = function PCTags ({ children, ...props }) {
+	return <TagsContainer { ...props }>{ children }</TagsContainer>
 }
 
 PostCard.Tags = function PCTags ({ children, ...props }) {
@@ -30,14 +36,18 @@ PostCard.Image = function PCImage ({ children, ...props }) {
 	return <PostCardImage { ...props }>{ children }</PostCardImage>
 }
 
-PostCard.Timestamp = function PCTimestamp ({ children, ...props }) {
-	return <PostCardTimestamp { ...props }>{ children }</PostCardTimestamp>
-}
+// PostCard.Tagline = function PCTagline ({ children, ...props }) {
+// 	return <PostCardTimestamp { ...props }>{ children }</PostCardTimestamp>
+// }
 
 PostCard.Tagline = function PCTagline ({ children, ...props }) {
-	return <PostCardTimestamp { ...props }>{ children }</PostCardTimestamp>
+	return <PostCardTagline { ...props }>{ children }</PostCardTagline>
 }
 
 PostCard.Link = function PCTagline ({ children, ...props }) {
 	return <PostCardLink { ...props }>{ children }</PostCardLink>
+}
+
+PostCard.Description = function PCDescription ({ children, ...props }) {
+	return <PostCardDescription { ...props }>{ children }</PostCardDescription>
 }
